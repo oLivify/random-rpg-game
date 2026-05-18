@@ -85,7 +85,7 @@ public class Main {
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
     Random rng = new Random();
-    // create world
+    // create the world
     // create rooms
     Room kitchen = new Room("Kitchen");
     Room diningHall = new Room("Dining Hall");
