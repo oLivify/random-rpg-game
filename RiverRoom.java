@@ -45,8 +45,6 @@ public class RiverRoom extends Room {
             player.moveBackwards();
         }
         
-        
-        input.close();
     }
 
     
