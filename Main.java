@@ -95,7 +95,7 @@ public class Main {
    
     // player variables
     Player player = new Player();
-    player.setCurrentRoom(grandFoyer);
+    
     // the game loop
     while (true) {
       typewriter(50, "\n- - -\n");
