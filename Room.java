@@ -116,6 +116,7 @@ public class Room {
               + (player.getCurrentRoom().getItem() == null ? "" : "take, ")
               + (player.getCurrentRoom().getCharacter() == null ? "" : "talk, fight, ") + "or quit.\n");
     }
+    input.close();
   }
 
   // precondition: direction is either "north" or "south" or "east" or "west"

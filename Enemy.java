@@ -26,7 +26,7 @@ public class Enemy extends Npc
 
   // instance variables go here
   // private instance vars for health, int magicWeakness, attackName
-   private int health;
+  private int health;
   private int magicWeakness;
   private String attackName;
 

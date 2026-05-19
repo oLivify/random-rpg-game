@@ -40,7 +40,7 @@ public class RiverRoom extends Room {
         }
         
         
-        
+        input.close();
     }
 
     /**
@@ -126,5 +126,6 @@ public class RiverRoom extends Room {
             Main.typewriter(5, "You stopped too soon! The current sweeps you back to your previous room.");
             return false;
         }
+        
     }
 }

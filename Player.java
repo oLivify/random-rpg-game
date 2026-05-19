@@ -78,46 +78,48 @@ public class Player
 
 
     public int fight(Random rng) {
-    Scanner input = new Scanner(System.in);
-    Npc currentNpc = this.getCurrentRoom().getCharacter();
-    if (currentNpc == null) {
-      Main.typewriter(50, "There is nobody here to fight.\n");
-      return this.getHealth();
-    }
-    if (currentNpc instanceof Enemy == false) {
-      Main.typewriter(50, currentNpc.getName() + " doesn't want to fight you.\n");
-      return this.getHealth();
-    }
-    Enemy e = (Enemy) currentNpc;
-    while (this.getHealth() > 0) {
-      System.out.print("FIGHT!!! p = punch, k = kick, r = run"
-          + (this.getBackpack() == null ? "" : ", x = use " + this.getBackpack().getName()) + ": ");
-      String command = input.next();
-      command = command.toLowerCase();
-      if (command.equals("r")) {
-        if (rng.nextInt(2) == 0) {
-          Main.typewriter(50, "You escaped... but " + e.getName() + " hits you as you run away...\n");
-          e.attackPlayer(rng, this);
-          return this.getHealth();
-        } else {
-          Main.typewriter(50, "Oof! Tried to run away, but could not escape!\n");
-        }
-      }
-      attackEnemy(rng, command, e);
-      if (this.getBackpack() != null && this.getBackpack().isBroken()) {
-        this.setBackpack(null);
-      }
-      if (e.getHealth() > 0) {
-        // enemyAttackPlayer
-        e.attackPlayer(rng, this);
-      } else {
-        Main.typewriter(50, e.getName() + " fainted! You won the fight!\n");
-        this.getCurrentRoom().setCharacter(null);
-        this.increaseEnemiesDefeated();
+      Scanner input = new Scanner(System.in);
+      Npc currentNpc = this.getCurrentRoom().getCharacter();
+      if (currentNpc == null) {
+        Main.typewriter(50, "There is nobody here to fight.\n");
         return this.getHealth();
       }
-    }
-    return this.getHealth();
+      if (currentNpc instanceof Enemy == false) {
+        Main.typewriter(50, currentNpc.getName() + " doesn't want to fight you.\n");
+        return this.getHealth();
+      }
+      Enemy e = (Enemy) currentNpc;
+      while (this.getHealth() > 0) {
+        System.out.print("FIGHT!!! p = punch, k = kick, r = run"
+            + (this.getBackpack() == null ? "" : ", x = use " + this.getBackpack().getName()) + ": ");
+        String command = input.next();
+        command = command.toLowerCase();
+        if (command.equals("r")) {
+          if (rng.nextInt(2) == 0) {
+            Main.typewriter(50, "You escaped... but " + e.getName() + " hits you as you run away...\n");
+            e.attackPlayer(rng, this);
+            return this.getHealth();
+          } else {
+            Main.typewriter(50, "Oof! Tried to run away, but could not escape!\n");
+          }
+        }
+        attackEnemy(rng, command, e);
+        if (this.getBackpack() != null && this.getBackpack().isBroken()) {
+          this.setBackpack(null);
+        }
+        if (e.getHealth() > 0) {
+          // enemyAttackPlayer
+          e.attackPlayer(rng, this);
+        } else {
+          Main.typewriter(50, e.getName() + " fainted! You won the fight!\n");
+          this.getCurrentRoom().setCharacter(null);
+          this.increaseEnemiesDefeated();
+          return this.getHealth();
+        }
+      }
+      input.close();
+      return this.getHealth();
+      
   }
 
 
