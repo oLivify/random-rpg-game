@@ -8,7 +8,7 @@ Room (9 tasks)
 ✅ + Room getLocationTo(String direction)
 ✅ + String getName() - Completed by Yash
 ✅ + String getPossibleDirections()
-✅ + void linkRoom(Room r, String direction)
+
 ✅ + void setCharacter(Npc character)
 ✅ + void setDescription(String d) DONE
 ✅ + void setItem(Item i)
@@ -95,7 +95,7 @@ public class Room {
     String command = input.next();
     command = command.toLowerCase();
     if (command.equals("north") || command.equals("south") || command.equals("east") || command.equals("west")) {
-      player.setCurrentRoom(player.getCurrentRoom().getLocationTo(command));
+      player.setLocation(command);
     } else if (command.equals("take")) {
       player.takeItem();
     } else if (command.equals("talk")) {
@@ -118,20 +118,6 @@ public class Room {
     }
   }
 
-  // precondition: direction is either "north" or "south" or "east" or "west"
-  public Room getLocationTo(String direction) {
-    if (direction.equals("north")) {
-      return north;
-    } else if (direction.equals("south")) {
-      return south;
-    } else if (direction.equals("east")) {
-      return east;
-    } else if (direction.equals("west")) {
-      return west;
-    } else {
-      return this; // if none of those, then return the current room
-    }
-  }
 
   public String getPossibleDirections() {
     String possibleDirections = "Type either: ";
@@ -151,25 +137,6 @@ public class Room {
     return possibleDirections;
   }
 
-  /**
-   * linkRoom(Room r, String direction) makes connections between two rooms
-   * precondition: direction is either "north" or "south" or "east" or "west"
-   * 
-   * @param r         - a room object should be supplied for the variable r
-   * @param direction - direction should be the lowercase words "north" "south"
-   *                  "east" or "west
-   */
-  public void linkRoom(Room r, String direction) {
-    if (direction == "south") {
-      south = r;
-    } else if (direction == "north") {
-      north = r;
-    } else if (direction == "west") {
-      west = r;
-    } else if (direction == "east") {
-      east = r;
-    }
-  }
 
   // methods go down here
   public Npc getCharacter() {
