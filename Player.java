@@ -43,6 +43,13 @@ public class Player {
         punchStrength = 13 - kickStrength;
         enemiesDefeated = 0;
         currentRoom = null;
+        location = new int[2];
+        previousLocation = new int[2];
+        location[0] = Map.WORLD_HEIGHT/2;
+        location[1] = Map.WORLD_WIDTH/2;
+        previousLocation[0] = Map.WORLD_HEIGHT/2;
+        previousLocation[1] = Map.WORLD_WIDTH/2;
+        backpack = new Inventory();
     }
 
     public int attackEnemy(Random rng, String command, Enemy e) {
@@ -153,13 +160,14 @@ public class Player {
     }
 
     public void setLocation(int row, int col) {
-        
+        //System.out.println("setLocation "+location[0]+" "+location[1]);
         if(row >= 0 && row < Map.WORLD_HEIGHT && col >= 0 && col < Map.WORLD_WIDTH){
             previousLocation[0] = location[0];
             previousLocation[1] = location[1];
             location[0] = row;
             location[1] = col;
         }
+        //System.out.println("setLocation "+row+" "+col);
     }
 
     public void setLocation(String direction) {
