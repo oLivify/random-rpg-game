@@ -11,6 +11,8 @@ Enemy extends Npc (6 tasks) Alex Can do these
 */
 
 import java.util.Random;
+import java.util.ArrayList;
+
 
 public class Enemy extends Npc
 {
@@ -29,6 +31,10 @@ public class Enemy extends Npc
   private int health;
   private int magicWeakness;
   private String attackName;
+  //private Item reward;
+  //private ArrayList<Item> rewardList; fix tomorrow
+
+  
 
   public Enemy(){
     super();
@@ -36,6 +42,7 @@ public class Enemy extends Npc
     magicWeakness = 1;
     attackName = "slap";
     enemyCounter++;
+    //reward = rewardList.get((int)(Math.random()*rewardList.size()-1));
   }
 
   public Enemy(String enemyName, String enemyDescription){
