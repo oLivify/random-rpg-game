@@ -79,8 +79,6 @@ public class FightEvent {
             Main.typewriter(50, "You have been slain by " + enemy.getName() + "\n");
             return FightEvent.Outcome.PLAYER_LOSE;
         }
-        input.close();
         return null;
-
     }
 }
