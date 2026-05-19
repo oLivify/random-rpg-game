@@ -87,23 +87,15 @@ public class Main {
     Main.typewriter(5, "Please type a random seed number:");
     Random rng = new Random(input.nextInt());
     // create world now please
-    // create rooms
-   
-    // descriptions
-    
-    // create characters
-   
-    // player variables
+    Map map = new Map();
     Player player = new Player();
     
     // the game loop
     while (true) {
       typewriter(50, "\n- - -\n");
-      player.getCurrentRoom().enterRoom(player, rng);
+      Room currentRoom = map.getLocation(player.getLocation());
 
-      if (player.getBackpack() != null && player.getBackpack().isBroken()) {
-        player.setBackpack(null);
-      }
+      
       if (isGameWon == true) {
         break;
       }
