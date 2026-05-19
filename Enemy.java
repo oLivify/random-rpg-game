@@ -9,6 +9,9 @@ Enemy extends Npc (6 tasks) Alex Can do these
   ✅ + void loseHealth(int h)
   ✅ + void setAttackName()
 */
+
+import java.util.Random;
+
 public class Enemy extends Npc
 {
   // class variables
@@ -42,6 +45,17 @@ public class Enemy extends Npc
     attackName = "slap";
     enemyCounter++;
   }
+
+   public int attackPlayer(Random rng, Player player) {
+    int attack = rng.nextInt(6) + rng.nextInt(6) + 2;
+    Main.typewriter(50, " > > > " + this.getName() + " uses " + this.getAttackName() + "\n");
+    Main.typewriter(50, " > > > -" + attack + " HP\n");
+    player.loseHealth(attack);
+    Main.typewriter(50, "You have " + player.getHealth() + " HP remaining\n");
+    return player.getHealth();
+  }
+
+
 
   public String getAttackName(){
     return attackName;
