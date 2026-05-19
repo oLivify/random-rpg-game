@@ -57,9 +57,7 @@ public class Enemy extends Npc
     int attack = rng.nextInt(6) + rng.nextInt(6) + 2;
     Main.typewriter(50, " > > > " + this.getName() + " uses " + this.getAttackName() + "\n");
     Main.typewriter(50, " > > > -" + attack + " HP\n");
-    player.loseHealth(attack);
-    Main.typewriter(50, "You have " + player.getHealth() + " HP remaining\n");
-    return player.getHealth();
+    return attack;
   }
 
 
