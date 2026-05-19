@@ -101,7 +101,6 @@ public class Room {
               + (this.getItem() == null ? "" : "take, ")
               + (this.getCharacter() == null ? "" : "talk, fight, ") + "or quit.\n");
     }
-    input.close();
   }
 
 
