@@ -84,16 +84,17 @@ public class Main {
 
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
-    Main.typewriter(5, "Please type a random seed number:");
+    Main.typewriter(5, "Please type a random seed number: ");
     Random rng = new Random(input.nextInt());
     // create world now please
-    Map map = new Map();
+    Map map = new Map(rng);
     Player player = new Player();
     
     // the game loop
     while (true) {
       typewriter(50, "\n- - -\n");
       Room currentRoom = map.getLocation(player.getLocation());
+      currentRoom.enterRoom(player, rng);
 
       
       if (isGameWon == true) {
@@ -110,7 +111,18 @@ public class Main {
 
  
 
-  
+  // Implementing Fisher–Yates shuffle
+  static void shuffleArray(Random rng, int[] arr)
+  {
+    for (int i = arr.length - 1; i > 0; i--)
+    {
+      int index = rng.nextInt(i + 1);
+      // Simple swap
+      int temp = arr[index];
+      arr[index] = arr[i];
+      arr[i] = temp;
+    }
+  }
 
   
 
