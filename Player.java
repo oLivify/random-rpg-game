@@ -121,8 +121,10 @@ public class Player
           return this.getHealth();
         }
       }
+      input.close();
       return this.getHealth();
-    }
+      
+  }
 
 
     public void gainHealth(){

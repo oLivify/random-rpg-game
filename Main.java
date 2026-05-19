@@ -112,6 +112,7 @@ public class Main {
         break;
       }
     } // close while loop
+    input.close();
   } // close main method
 
 
