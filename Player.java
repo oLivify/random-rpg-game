@@ -2,26 +2,29 @@
 Player (12 tasks) Joshua doing this one
   ✅ - private instance vars for location, previousLocation, health, kickStrength, punchStrength, enemiesDefeated, ArrayList<Item> backpack
   ✅ + NoArgsConstructor
+  ✅ + attackEnemy(rng, command, e)
+  ✅ + + void displayBackpack()
+  ✅ + fight(rng, currentNpc)
   ✅ + void gainHealth()
   ✅ + int getEnemiesDefeated
   ✅ + int getHealth
   ✅ + int getKickStrength
   ✅ + int getPunchStrength
-  int[] getLocation() // returns [row, col]
-  int[] getPreviousLocation()  // returns [row, col]
-  ✅ + Item getBackpack
+  ✅ + int[] getLocation() // returns [row, col]
+  ✅ + int[] getPreviousLocation()  // returns [row, col]
+  ✅ + ArrayList<Item> getBackpack 
   ✅ + void increaseEnemiesDefeated() // increases by 1
   ✅ + void loseHealth(int damage) // reduces health by damage
   void setLocation(int row, int col)
   void setLocation(String direction) // given north, south, east, west set the location
   ✅ + void setCurrentRoom(Room newRoom)
-  ✅ + void setBackpack(Item newItem)
+  ✅ + Item takeItem(Item newItem)
   ✅ + toString() // returns all the player stats
 */
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Player {
     // private instance vars go here
@@ -30,9 +33,9 @@ public class Player {
     private int punchStrength;
     private int enemiesDefeated;
     private Room currentRoom;
-    private Item backpack;
-    private int[] location = { 2, 2 }; // [row, col]
-    private int[] previousLocation = { 2, 2 }; // [row, col]
+    private Inventory backpack;
+    private int[] location; // [row, col] NOTE: game will set this to start at middle room
+    private int[] previousLocation; // [row, col] NOTE: game will set this to start at middle room
 
     public Player() {
         health = 100;
@@ -40,91 +43,55 @@ public class Player {
         punchStrength = 13 - kickStrength;
         enemiesDefeated = 0;
         currentRoom = null;
-        backpack = null;
     }
 
-    public void attackEnemy(Random rng, String command, Enemy e) {
+    public int attackEnemy(Random rng, String command, Enemy e) {
+        Scanner input = new Scanner(System.in);
         int attack = 0;
         if (command.equals("p")) {
             Main.typewriter(50, "You used PUNCH\n");
             attack = rng.nextInt(punchStrength) + rng.nextInt(punchStrength) + 1;
-            if (attack >= 12) {
-                Main.typewriter(50, "It's super effective!\n");
+            if (attack >= 20) {
+                Main.typewriter(50, "It's SUPER effective!\n");
             }
         } else if (command.equals("k")) {
             Main.typewriter(50, "You used KICK\n");
             attack = rng.nextInt(kickStrength) + rng.nextInt(kickStrength) + 1;
-            if (attack >= 12) {
-                Main.typewriter(50, "It's super effective!\n");
+            if (attack >= 20) {
+                Main.typewriter(50, "It's SUPER effective!\n");
             }
         } else if (command.equals("x") && backpack != null) {
-            Main.typewriter(50, "You used " + backpack.getName().toUpperCase() + "\n");
-            attack = backpack.getStrength();
-            if (backpack.getMagicType() == e.getMagicWeakness()) {
+            // which item?
+            Main.typewriter(5, "Which item? Type either:\n");
+            backpack.displayItems();
+            Item weapon = backpack.getItem(input.nextInt());
+            
+            Main.typewriter(5, "You used " + weapon.getName().toUpperCase() + "\n");
+            attack = weapon.getStrength();
+            if (weapon.getMagicType() == e.getMagicWeakness()) {
                 attack = attack * 3;
             }
-            if (attack >= 12) {
-                Main.typewriter(50, "It's super effective!\n");
+            if (attack >= 20) {
+                Main.typewriter(50, "It's SUPER effective!\n");
             }
-            backpack.weaken();
-            if (backpack.isBroken()) {
-                Main.typewriter(50, "Oh no! ! ! ! ! ! ! Your " + backpack.getName() + " broke! ! ! ! ! ! !\n");
+            weapon.weaken();
+            if (weapon.isBroken()) {
+                Main.typewriter(50, "Oh no! ! ! ! ! ! ! Your " + weapon.getName() + " broke! ! ! ! ! ! !\n");
                 // this.setBackpack(null);
             }
         } else if (!command.equals("r")) {
             Main.typewriter(50, "Sorry, I don't know how to " + command);
             Main.typewriter(50,
-                    ". Valid options: p, k, r" + (backpack == null ? "" : ", x = use " + backpack.getName()) + "\n");
-            return;
+                    ". Valid options: p, k, r" + (backpack == null ? "" : ", x = use an item\n"));
+            return 0;
         }
         Main.typewriter(50, e.getName() + " -" + attack + " HP\n");
-        e.loseHealth(attack);
+        return attack;
     }
 
-    public int fight(Random rng) {
-        Scanner input = new Scanner(System.in);
-        Npc currentNpc = this.getCurrentRoom().getCharacter();
-        if (currentNpc == null) {
-            Main.typewriter(50, "There is nobody here to fight.\n");
-            return this.getHealth();
-        }
-        if (currentNpc instanceof Enemy == false) {
-            Main.typewriter(50, currentNpc.getName() + " doesn't want to fight you.\n");
-            return this.getHealth();
-        }
-        Enemy e = (Enemy) currentNpc;
-        while (this.getHealth() > 0) {
-            System.out.print("FIGHT!!! p = punch, k = kick, r = run"
-                    + (this.getBackpack() == null ? "" : ", x = use " + this.getBackpack().getName()) + ": ");
-            String command = input.next();
-            command = command.toLowerCase();
-            if (command.equals("r")) {
-                if (rng.nextInt(2) == 0) {
-                    Main.typewriter(50, "You escaped... but " + e.getName() + " hits you as you run away...\n");
-                    e.attackPlayer(rng, this);
-                    return this.getHealth();
-                } else {
-                    Main.typewriter(50, "Oof! Tried to run away, but could not escape!\n");
-                }
-            }
-            attackEnemy(rng, command, e);
-            if (this.getBackpack() != null && this.getBackpack().isBroken()) {
-                this.setBackpack(null);
-            }
-            if (e.getHealth() > 0) {
-                // enemyAttackPlayer
-                e.attackPlayer(rng, this);
-            } else {
-                Main.typewriter(50, e.getName() + " fainted! You won the fight!\n");
-                this.getCurrentRoom().setCharacter(null);
-                this.increaseEnemiesDefeated();
-                return this.getHealth();
-            }
-        }
-        input.close();
-        return this.getHealth();
 
-    }
+
+   
 
     public void gainHealth() {
         if (health <= 100 && health > 0) {
@@ -150,24 +117,17 @@ public class Player {
         return location.clone();
     }
 
+    public int[] getPreviousLocation() {
+        return previousLocation.clone();
+    }
+
     public int getPunchStrength() {
         return punchStrength;
     }
 
-    public Room getCurrentRoom() {
-        return new Room(currentRoom);
-    }
-
-    public Item getBackpack() {
-        if (backpack == null) {
-            return null;
-        }
-        return new Item(backpack);
-    }
-
-    public Room getPreviousRoom() {
-        // TODO
-        return null;
+    public Inventory getBackpack() {
+        // return a COPY so the real backpack object stays private
+        return backpack.clone();
     }
 
     public void increaseEnemiesDefeated() {
@@ -178,26 +138,72 @@ public class Player {
         health -= damage;
     }
 
-    public void setCurrentRoom(Room newRoom) {
-        currentRoom = newRoom;
+    public Item loseRandomItem(Random rng){
+        return backpack.loseRandomItem(rng);
     }
 
-    public void setBackpack(Item newItem) {
-        backpack = newItem;
+    public void moveBackwards(){
+        // swap
+        int tempRow = location[0];
+        int tempCol = location[1];
+        location[0] = previousLocation[0];
+        location[1] = previousLocation[1];
+        previousLocation[0] = tempRow;
+        previousLocation[1] = tempCol;
     }
 
-    public void takeItem() {
-        if (getBackpack() != null) {
-            Item temp = this.getBackpack();
-            this.setBackpack(this.getCurrentRoom().getItem());
-            this.getCurrentRoom().setItem(temp);
-            Main.typewriter(50, "You drop " + temp + " and pick up " + this.getBackpack() + ".\n");
+    public void setLocation(int row, int col) {
+        
+        if(row >= 0 && row < Map.WORLD_HEIGHT && col >= 0 && col < Map.WORLD_WIDTH){
+            previousLocation[0] = location[0];
+            previousLocation[1] = location[1];
+            location[0] = row;
+            location[1] = col;
+        }
+    }
+
+    public void setLocation(String direction) {
+        if(direction.equalsIgnoreCase("north")){
+            setLocation(location[0] - 1, location[1]);
+        }
+        else if(direction.equalsIgnoreCase("south")){
+            setLocation(location[0] + 1, location[1]);
+        }
+        else if(direction.equalsIgnoreCase("east")){
+            setLocation(location[0], location[1] + 1);
+        }
+        else if(direction.equalsIgnoreCase("west")){
+            setLocation(location[0], location[1] - 1);
+        }
+    }
+
+    /**
+     * @param newItem The item being taken
+     * @return A dropped item or null if nothing was dropped
+     */
+    public Item takeItem(Item newItem) {
+        Item result = null;
+        if (backpack.getSize() > 0) {
+            Scanner input = new Scanner(System.in);
+            Main.typewriter(5, "Would you like to drop something? Type either: ");
+            backpack.displayItems();
+            Main.typewriter(5, "-1 = Keep everything");
+            int userNumber = input.nextInt();
+            if (userNumber >= 0 && userNumber < backpack.getSize()) {
+                Item dropped = backpack.removeItem(userNumber);
+                Main.typewriter(50, "You drop " + dropped + " and pick up " + newItem + ".\n");
+                result = dropped;
+            } else {
+                Main.typewriter(50, "You pick up " + newItem + ".\n");
+            }
+            backpack.addItem(newItem);
+
         } else {
             // not holding anything right now
-            this.setBackpack(this.getCurrentRoom().getItem());
-            this.getCurrentRoom().setItem(null);
-            Main.typewriter(50, "You pick up " + this.getBackpack() + ".\n");
+            backpack.addItem(newItem);
+            Main.typewriter(50, "You pick up " + newItem + ".\n");
         }
+        return result;
     }
 
     public String toString() {
