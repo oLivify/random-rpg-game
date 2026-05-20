@@ -20,6 +20,7 @@ public class Item
   private int strength;
   private String description;
   private int magicType;
+  private boolean isKey;
 
 
   
@@ -30,6 +31,7 @@ public class Item
     strength = 50;
     description = "item description";
     magicType = (int)(Math.random()*3+1);
+    isKey = false;
   }
 
 
@@ -40,15 +42,26 @@ public class Item
     description = _description;
     // set magicType to 1
     magicType = 1;
+    isKey = false;
   }
 
-    public Item(Item other)
+  public Item(Item other)
     {
       name = new String(other.name);
       strength = other.strength;
       description = new String(other.description);
       // set magicType to 1
       magicType = other.magicType;
+      isKey = other.isKey;
+    }
+
+  public Item(String _name, String _description, boolean _isKey) {
+      name = _name;
+      strength = 50;
+      description = _description;
+      // set magicType to 1
+      magicType = 1;
+      isKey = _isKey;
     }
 
 
@@ -83,6 +96,10 @@ public class Item
 
   public void weaken(){
     strength /= 2;
+  }
+
+  public boolean isKey() {
+      return isKey;
   }
 
   

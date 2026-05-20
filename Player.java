@@ -71,6 +71,12 @@ public class Player {
             Main.typewriter(5, "Which item? Type either:\n");
             backpack.displayItems();
             Weapon weapon = (Weapon)(backpack.getItem(input.nextInt())); // changed class from Item to Weapon, cast to Weapon
+            while (weapon.isKey() == true) { //added check to see if you are fighting with a key or not
+                Main.typewriter(5, "You cannot fight with keys. Choose a different item");
+                Main.typewriter(5, "Which item? Type either:\n");
+                backpack.displayItems();
+                weapon = (Weapon)(backpack.getItem(input.nextInt()));
+            }
             
             Main.typewriter(5, "You used " + weapon.getName().toUpperCase() + "\n");
             attack = weapon.getDamage(); // changed to getDamage from getStrength;
@@ -148,6 +154,7 @@ public class Player {
         return backpack.loseRandomItem(rng);
     }
 
+
     public void moveBackwards(){
         // swap
         int tempRow = location[0];
@@ -217,6 +224,10 @@ public class Player {
         return "Health: " + health + " Kick Strength: " + kickStrength +
                 " Punch Strength: " + punchStrength + " Enemies Defeated: " + enemiesDefeated + " Current Room: "
                 + currentRoom + " Backpack: " + backpack;
+    }
+
+    public void fullHeal() {
+        this.health = 100;
     }
 
 }
