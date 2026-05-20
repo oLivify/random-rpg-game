@@ -84,121 +84,19 @@ public class Main {
 
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
-    Random rng = new Random();
+    Main.typewriter(5, "Please type a random seed number: ");
+    Random rng = new Random(input.nextInt());
     // create world now please
-    // create rooms
-    Room kitchen = new Room("Kitchen");
-    Room diningHall = new Room("Dining Hall");
-    Room ballroom = new Room("Ballroom");
-    Room masterBedroom = new Room("Master Bedroom");
-    Room grandFoyer = new Room("Grand Foyer");
-    Room mainHallway = new Room("Main Hallway");
-    Room theStudy = new Room("The Study");
-    Room billiardsRm = new Room("The Billiards Room");
-    Room theBasement = new Room("The Basement");
-    // descriptions
-    kitchen.setDescription("A dank and dirty room buzzing with flies. Cobwebs hang from the ceiling.");
-    diningHall.setDescription("A large room with ornate golden decorations on each wall. The kitchen is to the west.");
-    ballroom.setDescription("A vast room with a shiny wooden floor. Huge candlesticks guard the entrance.");
-    masterBedroom.setDescription("A large room with a massive bed in the middle of it.");
-    grandFoyer.setDescription(
-        "The entrance to the dark mansion. Designed to astonish guests. The hallway is north and there are large, double-doors to the west.");
-    mainHallway.setDescription("A long dark hall that has creepy paintings on the walls.");
-    theStudy.setDescription(
-        "A small room with a large wooden desk. The walls are covered in book shelves filled with books.");
-    billiardsRm.setDescription(
-        "A small cramped room with a large pool table in the middle. The table is in bad shape with ripped felt.");
-    theBasement.setDescription(
-        "Unlike the rest of the house, the basement is very clean and tidy. There are canned vegetables on a shelf. Has someone been living down here?");
-    // link rooms together. don't forget to link the rooms in both directions.
-    grandFoyer.linkRoom(mainHallway, "north");
-    mainHallway.linkRoom(grandFoyer, "south");
-    grandFoyer.linkRoom(ballroom, "west");
-    ballroom.linkRoom(grandFoyer, "east");
-    ballroom.linkRoom(diningHall, "north");
-    diningHall.linkRoom(ballroom, "south");
-    kitchen.linkRoom(diningHall, "east");
-    diningHall.linkRoom(kitchen, "west");
-    diningHall.linkRoom(billiardsRm, "north");
-    billiardsRm.linkRoom(diningHall, "south");
-    diningHall.linkRoom(mainHallway, "east");
-    mainHallway.linkRoom(diningHall, "west");
-    mainHallway.linkRoom(theBasement, "north");
-    theBasement.linkRoom(mainHallway, "south");
-    mainHallway.linkRoom(theStudy, "east");
-    theStudy.linkRoom(mainHallway, "west");
-    theStudy.linkRoom(masterBedroom, "north");
-    masterBedroom.linkRoom(theStudy, "south");
-    billiardsRm.linkRoom(theBasement, "east");
-    theBasement.linkRoom(billiardsRm, "west");
-    theBasement.linkRoom(masterBedroom, "east");
-    masterBedroom.linkRoom(theBasement, "west");
-    // create characters
-    // Ava
-    Enemy ava = new Enemy("Ava", "a beautiful chicken");
-    ava.setSpeech("cluck... cluck... cluck...");
-    ava.setAttackName("PECK");
-    if (rng.nextInt(2) == 0) {
-      kitchen.setCharacter(ava);
-    } else {
-      billiardsRm.setCharacter(ava);
-    }
-    // Becky
-    Enemy becky = new Enemy("Becky", "a wicked witch");
-    becky.setSpeech("Yahaha! You found me!");
-    ava.setAttackName("BAD BREATH");
-    if (rng.nextInt(2) == 0) {
-      theBasement.setCharacter(becky);
-    } else {
-      diningHall.setCharacter(becky);
-    }
-    // Catrina
-    Npc catrina = new Npc("Catrina", "a friendly skeleton");
-    catrina.setSpeech("Why hello there.");
-    if (rng.nextInt(2) == 0) {
-      mainHallway.setCharacter(catrina);
-    } else {
-      ballroom.setCharacter(catrina);
-    }
-    // Dave
-    Enemy dave = new Enemy("Dave", "a smelly zombie");
-    dave.setSpeech("Brrlgrh... rhrhl... brains...");
-    ava.setAttackName("BITE");
-    if (rng.nextInt(2) == 0) {
-      masterBedroom.setCharacter(dave);
-    } else {
-      theStudy.setCharacter(dave);
-    }
-    // create items
-    Item staff = new Item("staff", "a weird old wizard's staff");
-    if (rng.nextInt(2) == 0) {
-      kitchen.setItem(staff);
-    } else {
-      diningHall.setItem(staff);
-    }
-    Item sword = new Item("sword", "a well-decorated sword");
-    if (rng.nextInt(2) == 0) {
-      masterBedroom.setItem(sword);
-    } else {
-      theStudy.setItem(sword);
-    }
-    Item wand = new Item("wand", "a strange, glowing wand");
-    if (rng.nextInt(2) == 0) {
-      billiardsRm.setItem(wand);
-    } else {
-      theBasement.setItem(wand);
-    }
-    // player variables
+    Map map = new Map(rng);
     Player player = new Player();
-    player.setCurrentRoom(grandFoyer);
+    
     // the game loop
     while (true) {
       typewriter(50, "\n- - -\n");
-      player.getCurrentRoom().enterRoom(player, rng);
+      Room currentRoom = map.getLocation(player.getLocation());
+      currentRoom.enterRoom(player, rng);
 
-      if (player.getBackpack() != null && player.getBackpack().isBroken()) {
-        player.setBackpack(null);
-      }
+      
       if (isGameWon == true) {
         break;
       }
@@ -213,7 +111,18 @@ public class Main {
 
  
 
-  
+  // Implementing Fisher–Yates shuffle
+  static void shuffleArray(Random rng, int[] arr)
+  {
+    for (int i = arr.length - 1; i > 0; i--)
+    {
+      int index = rng.nextInt(i + 1);
+      // Simple swap
+      int temp = arr[index];
+      arr[index] = arr[i];
+      arr[i] = temp;
+    }
+  }
 
   
 

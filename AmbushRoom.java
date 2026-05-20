@@ -15,7 +15,19 @@ public class AmbushRoom extends Room {
         Scanner input = new Scanner(System.in);
         Main.typewriter(5, "You get ambushed by an enemy!");
         ((Enemy)getCharacter()).attackPlayer(rng, player);
-        player.fight(rng);
+        // construct a new FightEvent
+        FightEvent fight = new FightEvent(rng, player, getCharacter());
+        // execute the fight and it returns an outcome
+        FightEvent.Outcome fightResult = fight.execute();
+        if(fightResult == FightEvent.Outcome.PLAYER_WIN){
+            // enemy died
+            super.setCharacter(null);
+            // enter the normal room
+            super.enterRoom(player,rng);
+        }
+        else if(fightResult == FightEvent.Outcome.PLAYER_FLED){
+            player.moveBackwards();
+        }
     }
 
 
