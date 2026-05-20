@@ -72,6 +72,7 @@ public class FightEvent {
             } else {
                 Main.typewriter(50, enemy.getName() + " fainted! You won the fight!\n");
                 player.increaseEnemiesDefeated();
+                player.takeItem(enemy.dropReward());
                 return FightEvent.Outcome.PLAYER_WIN;
             }
         }

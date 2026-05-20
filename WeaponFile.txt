@@ -1,0 +1,2 @@
+sword,a steel blade used for fighting
+scythe,a tool farmers use
