@@ -11,7 +11,6 @@ Enemy extends Npc (6 tasks) Alex Can do these
 */
 
 import java.util.Random;
-import java.util.ArrayList;
 
 
 public class Enemy extends Npc
@@ -31,8 +30,8 @@ public class Enemy extends Npc
   private int health;
   private int magicWeakness;
   private String attackName;
-  //private Item reward;
-  //private ArrayList<Item> rewardList; fix tomorrow
+  private Item reward;
+  // enemy can drop sword or scythe
 
   
 
@@ -42,7 +41,15 @@ public class Enemy extends Npc
     magicWeakness = 1;
     attackName = "slap";
     enemyCounter++;
-    //reward = rewardList.get((int)(Math.random()*rewardList.size()-1));
+  }
+  // constructor that has enemy drop an item
+  public Enemy(Item _reward){
+    super();
+    health = 100;
+    magicWeakness = 1;
+    attackName = "slap";
+    enemyCounter++;
+    reward = _reward;
   }
 
   public Enemy(String enemyName, String enemyDescription){
@@ -50,6 +57,15 @@ public class Enemy extends Npc
     health = 100;
     magicWeakness = 1;
     attackName = "slap";
+    enemyCounter++;
+  }
+
+  public Enemy(String enemyName, String enemyDescription, Item _reward){
+    super(enemyName,enemyDescription);
+    health = 100;
+    magicWeakness = 1;
+    attackName = "slap";
+    reward = _reward;
     enemyCounter++;
   }
 
@@ -80,6 +96,9 @@ public class Enemy extends Npc
   }
 
   // methods go down here
+  public Weapon dropReward() { // drops weapon when defeated
+    return new Weapon((Weapon)reward); //new copy
+  }
 
 
 }

@@ -77,19 +77,41 @@ Map:
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Main {
 
   private static boolean isGameWon = false;
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws FileNotFoundException {
     Scanner input = new Scanner(System.in);
     Main.typewriter(5, "Please type a random seed number: ");
     Random rng = new Random(input.nextInt());
     // create world now please
     Map map = new Map(rng);
     Player player = new Player();
-    
+
+    // loading weapons from text file
+    File weaponData = new File("C:\\Users\\900955\\Documents\\GitHub\\random-rpg-game\\WeaponFile.txt"); //not sure how this is going to work on multiple devices.
+    Scanner fileInput = new Scanner(weaponData);
+    ArrayList<Item> enemyDrops = new ArrayList<Item>(); //enemy drop list
+    String wName = "";
+    String wDescriptions = "";
+    int wDamage = 0;
+
+    while(fileInput.hasNext()) {
+      String[] parts = fileInput.next().split(",");
+      wName = parts[0];
+      wDescriptions = parts[1];
+      wDamage = Integer.parseInt(parts[2]);
+      enemyDrops.add(new Weapon(wName, wDescriptions, wDamage));
+    }
+
+    // make a test enemy | ignore this i needed a visual representation
+    Enemy test1 = new Enemy("bob", "a floating piece of paper in the sky", enemyDrops.get((int) (Math.random() * enemyDrops.size()))); //enemy drops random weapon
+
     // the game loop
     while (true) {
       typewriter(50, "\n- - -\n");

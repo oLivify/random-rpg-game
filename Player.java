@@ -22,7 +22,6 @@ Player (12 tasks) Joshua doing this one
   ✅ + toString() // returns all the player stats
 */
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -71,10 +70,10 @@ public class Player {
             // which item?
             Main.typewriter(5, "Which item? Type either:\n");
             backpack.displayItems();
-            Item weapon = backpack.getItem(input.nextInt());
+            Weapon weapon = (Weapon)(backpack.getItem(input.nextInt())); // changed class from Item to Weapon, cast to Weapon
             
             Main.typewriter(5, "You used " + weapon.getName().toUpperCase() + "\n");
-            attack = weapon.getStrength();
+            attack = weapon.getDamage(); // changed to getDamage from getStrength;
             if (weapon.getMagicType() == e.getMagicWeakness()) {
                 attack = attack * 3;
             }
