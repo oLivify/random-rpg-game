@@ -1,14 +1,22 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class TempleRoom {
+public class TempleRoom extends Room{
     private String templeName;
     private static String generateRoomName(){
         
     }
 
-    public TempleRoom(){
+    public TempleRoom() {
+        super();
+    }
 
+    public TempleRoom(String _name) {
+        super(_name);
+    }
+
+    public void enterRoom(Player player) {
+        
     }
 
 }
