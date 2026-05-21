@@ -107,6 +107,7 @@ public class Room {
 
     } else if (command.equals("quit")) {
       Main.typewriter(50, "Thanks for playing\n");
+      System.exit(0);
     } else {
       Main.typewriter(50, "I don't know how to " + command);
       Main.typewriter(50,
