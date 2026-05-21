@@ -107,18 +107,38 @@ public class Map {
     }
 
     public void setupRiver(){
-        for(int row = 0; row < WORLD_HEIGHT; row++){
-            // col 1, 2, or 3
-            int col = Main.rng.nextInt(3) + WORLD_HEIGHT / 2 - 1;
-            // if spawn point
-            if(row == WORLD_HEIGHT / 2 && col == WORLD_WIDTH / 2){
+        final int RIVER_MIN_COLUMN = 1;
+        final int RIVER_MAX_COLUMN = WORLD_WIDTH - 2;
+        int previousCol = -1;
+        // row 0 is the only truly random location
+        int col = Main.rng.nextInt(RIVER_MAX_COLUMN) + RIVER_MIN_COLUMN;
+        gameMap[0][col] = new RiverRoom(RiverRoom.generateName());
+        previousCol = col;
+        // the rest of the rows are dependant on the previous row
+        for(int row = 1; row < WORLD_HEIGHT; row++){
+            
+            if(previousCol == RIVER_MIN_COLUMN){ 
+                col = previousCol + 1;
+            }
+            else if(previousCol == RIVER_MAX_COLUMN){ 
+                col = previousCol - 1;
+            }           
+            else { // either previousCol -1 or previousCol +1
                 if(Main.rng.nextInt(2) == 0){
-                    col++;
+                    col = previousCol + 1;
                 } else {
-                    col--;
+                    col = previousCol - 1;
+                }
+            }
+            if(row == WORLD_HEIGHT / 2 && col == WORLD_WIDTH / 2){ // if spawn point
+                if(Main.rng.nextInt(2) == 0){
+                    col =  WORLD_WIDTH / 2 + 1;
+                } else {
+                    col =  WORLD_WIDTH / 2 - 1;
                 }
             }
             gameMap[row][col] = new RiverRoom(RiverRoom.generateName());
+            previousCol = col;
         }
     }
 }
