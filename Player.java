@@ -55,18 +55,18 @@ public class Player {
         Scanner input = new Scanner(System.in);
         int attack = 0;
         if (command.equals("p")) {
-            Main.typewriter(50, "You used PUNCH\n");
+            Main.typewriter(5, "You used PUNCH\n");
             attack = Main.rng.nextInt(punchStrength) + Main.rng.nextInt(punchStrength) + 1;
             if (attack >= 20) {
-                Main.typewriter(50, "It's SUPER effective!\n");
+                Main.typewriter(5, "It's SUPER effective!\n");
             }
         } else if (command.equals("k")) {
-            Main.typewriter(50, "You used KICK\n");
+            Main.typewriter(5, "You used KICK\n");
             attack = Main.rng.nextInt(kickStrength) + Main.rng.nextInt(kickStrength) + 1;
             if (attack >= 20) {
-                Main.typewriter(50, "It's SUPER effective!\n");
+                Main.typewriter(5, "It's SUPER effective!\n");
             }
-        } else if (command.equals("x") && backpack != null) {
+        } else if (command.equals("u") && backpack != null) { // use item
             // which item?
             Main.typewriter(5, "Which item? Type either:\n");
             backpack.displayItems();
@@ -97,7 +97,7 @@ public class Player {
                     ". Valid options: p, k, r" + (backpack == null ? "" : ", x = use an item\n"));
             return 0;
         }
-        Main.typewriter(50, e.getName() + " -" + attack + " HP\n");
+        Main.typewriter(5, e.getName() + " -" + attack + " HP\n");
         return attack;
     }
 

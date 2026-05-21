@@ -39,8 +39,8 @@ public class FightEvent {
         int damageToEnemy = 0;
         int damageToPlayer = 0;
         while (player.getHealth() > 0) {
-            Main.typewriter(5, "FIGHT!!! p = punch, k = kick, r = run"
-                    + (player.getBackpack().getSize() == 0 ? "" : ", x = use item: "));
+            Main.typewriter(5, "FIGHT!!! [p]unch, [k]ick, [r]un"
+                    + (player.getBackpack().getSize() == 0 ? "" : ", [u]se item") + ": ");
             String command = input.next();
             command = command.toLowerCase();
             if (command.equals("r")) {
