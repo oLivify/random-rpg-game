@@ -26,13 +26,13 @@ public class Room {
         "Howling", "Serpent's", "Sunken", "Smuggler's", "Frozen", "Blighted", "Crimson",
         "Weeping Willow", "Obsidian", "Misty", "Sunspire", "Dead Man's",
         "Scorched", "Overgrown", "Silent", "Windworn", "Twilight", "Glacial",
-        "Echoing", "Sacred", "Stormwashed", "Pine", "Oak","Fool's","Abandoned","Ruined",
-        "Lost","Shadow"
+        "Echoing", "Sacred", "Stormwashed", "Pine", "Oak", "Fool's", "Abandoned", "Ruined",
+        "Lost", "Shadow"
     };
     String[] nouns = { "Woods", "Crossroads", "Peaks", "Badlands", "Mire", "Valley",
-        "Farm","Tundra","Hills","Canyon","Grove","Crags","Pasture", "Vineyard","Bog",
-        "Highlands","Steppes","Creek","Plains","Ruins","Oasis","Marsh","Swamp","Wetland",
-        "Mesa","Homestead","Chasm","Ranch","Ridge","Cliffs","Orchard","Garden"
+        "Farm", "Tundra", "Hills", "Canyon", "Grove", "Crags", "Pasture", "Vineyard", "Bog",
+        "Highlands", "Steppes", "Creek", "Plains", "Ruins", "Oasis", "Marsh", "Swamp", "Wetland",
+        "Mesa", "Homestead", "Chasm", "Ranch", "Ridge", "Cliffs", "Orchard", "Garden"
     };
     int adjIndex = Main.rng.nextInt(adjectives.length);
     int nounIndex = Main.rng.nextInt(nouns.length);
@@ -69,7 +69,6 @@ public class Room {
   public void enterRoom(Player player) {
     Scanner input = new Scanner(System.in);
     Npc roomNpc = getCharacter();
-    Item roomItem = getItem();
     // describe the current room
     Main.typewriter(5, getName() + "\n");
     Main.typewriter(5, toString() + "\n");
@@ -94,7 +93,7 @@ public class Room {
     if (command.equals("north") || command.equals("south") || command.equals("east") || command.equals("west")) {
       player.setLocation(command);
     } else if (command.equals("take")) {
-      player.takeItem(roomItem);
+      roomItem = player.takeItem(roomItem); // player either drops null or a different item
     } else if (command.equals("talk")) {
       if (roomNpc != null) {
         Main.typewriter(50, roomNpc.getName() + ": \"" + roomNpc.getSpeech() + "\"\n");
