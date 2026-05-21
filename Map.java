@@ -28,14 +28,19 @@ public class Map {
         setupQuadrant(WORLD_HEIGHT-2,WORLD_WIDTH-2, !oddQuadrantsHaveHealing);
         fillAllEmptyRooms();
         // finally, ensure that spawn point is a normal room
-        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room();
+        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.generateName());
         displayMap(); // for debugging only
     }
 
     public void displayMap(){
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
-                System.out.print(gameMap[row][col].getName() + " | ");
+                String roomName = gameMap[row][col].getName();
+                String spaceString = "                      |  ";
+                if(roomName.length() < spaceString.length()){
+                    spaceString = spaceString.substring(roomName.length());
+                }
+                System.out.print( roomName + spaceString);
             }
             System.out.println();
         }
@@ -54,7 +59,7 @@ public class Map {
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
                 if(gameMap[row][col] == null){
-                    gameMap[row][col] = new Room();
+                    gameMap[row][col] = new Room(Room.generateName());
                 }
             }
         }
@@ -78,12 +83,13 @@ public class Map {
             int colOffset = spots[i] % 10;
             if(counter == 0 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place a temple here
-                Room tempRoom = new Room(); // this SHOULD be TempleRoom
+                Room tempRoom = new TempleRoom("Temple " + (startingRow*10 + startingCol)); // this SHOULD be TempleRoom
+                gameMap[startingRow + rowOffset][startingCol + colOffset] = tempRoom;
                 counter++;
             }
             if(counter == 1 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place an enemy with a key here
-                Room keyRoom = new AmbushRoom();
+                Room keyRoom = new AmbushRoom("Ambush", rng);
                 Enemy keyHoldingEnemy = new Enemy();
                 keyRoom.setCharacter(keyHoldingEnemy);
                 gameMap[startingRow + rowOffset][startingCol + colOffset] = keyRoom;
@@ -92,7 +98,7 @@ public class Map {
             if(counter == 2 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // either odd number quadrants or even number quadrants have a healing room
                 if(hasHealingRoom){
-                    Room healingRoom = new HealingRoom();
+                    Room healingRoom = new HealingRoom("Healing");
                     gameMap[startingRow + rowOffset][startingCol + colOffset] = healingRoom;
                 }
                 counter++;
@@ -112,7 +118,7 @@ public class Map {
                     col--;
                 }
             }
-            gameMap[row][col] = new RiverRoom();
+            gameMap[row][col] = new RiverRoom(RiverRoom.generateName());
         }
     }
 }

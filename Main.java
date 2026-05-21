@@ -94,7 +94,7 @@ public class Main {
     Player player = new Player();
 
     // loading weapons from text file
-    File weaponData = new File("C:\\Users\\900955\\Documents\\GitHub\\random-rpg-game\\WeaponFile.txt"); //not sure how this is going to work on multiple devices.
+    File weaponData = new File(".\\WeaponFile.txt"); //not sure how this is going to work on multiple devices.
     Scanner fileInput = new Scanner(weaponData);
     ArrayList<Item> enemyDrops = new ArrayList<Item>(); //enemy drop list
     String wName = "";
@@ -102,7 +102,7 @@ public class Main {
     int wDamage = 0;
 
     while(fileInput.hasNext()) {
-      String[] parts = fileInput.next().split(",");
+      String[] parts = fileInput.nextLine().split(",");
       wName = parts[0];
       wDescriptions = parts[1];
       wDamage = Integer.parseInt(parts[2]);

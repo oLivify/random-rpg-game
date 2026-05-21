@@ -21,11 +21,24 @@ import java.util.Scanner;
 
 public class Room {
 
-  /*
-   * fight with an enemy. returns the new player.getHealth().
-   */
-  
- 
+  public static String generateName() {
+    String[] adjectives = { "Whispering", "Forgotten", "Shimmering", "Ashen",
+        "Howling", "Serpent's", "Sunken", "Smuggler's", "Frozen", "Blighted", "Crimson",
+        "Weeping Willow", "Obsidian", "Misty", "Sunspire", "Dead Man's",
+        "Scorched", "Overgrown", "Silent", "Windworn", "Twilight", "Glacial",
+        "Echoing", "Sacred", "Stormwashed", "Pine", "Oak","Fool's","Abandoned","Ruined",
+        "Lost","Shadow"
+    };
+    String[] nouns = { "Woods", "Crossroads", "Peaks", "Badlands", "Mire", "Valley",
+        "Farm","Tundra","Hills","Canyon","Grove","Crags","Pasture", "Vineyard","Bog",
+        "Highlands","Steppes","Creek","Plains","Ruins","Oasis","Marsh","Swamp","Wetland",
+        "Mesa","Homestead","Chasm","Ranch","Ridge","Cliffs","Orchard","Garden"
+    };
+    int adjIndex = (int) (Math.random() * adjectives.length);
+    int nounIndex = (int) (Math.random() * nouns.length);
+    return adjectives[adjIndex] + " " + nouns[nounIndex];
+  }
+
   private String name;
   private String description;
   private Npc character;
@@ -103,7 +116,6 @@ public class Room {
     }
   }
 
-
   public String getPossibleDirections(Player player) {
     int[] myLocation = player.getLocation();
     int row = myLocation[0];
@@ -124,7 +136,6 @@ public class Room {
 
     return possibleDirections;
   }
-
 
   // methods go down here
   public Npc getCharacter() {

@@ -4,18 +4,23 @@ import java.util.Random;
 
 public class RiverRoom extends Room {
 
-    public static String generateRiverName(){
+    public static String generateName(){
         String[] adjectives = {"Little", "Smokey", "Big", "Great", "East", "West", "North",
             "South","White","Green","Red","Blue","Saint","Winding","Black","Wild","Golden",
-            "Grand","Broad","Windy",""
+            "Grand","Broad","Windy"
         };
         String[] nouns = {"Fork","Snake", "Platte", "Tar", "Wind","Oak","Maple","Day","Night",
             "Spring","Summer","Winter","Falls","Branch","Thorn","Mile","Wood","Elk","Moose",
-            "Bear","Fox","Field","Plains","Valley","Deer","Water","Rock","Stone",""
+            "Bear","Fox","Field","Plains","Valley","Deer","Water","Rock","Stone","Willow",
+            "Magnolia","Sycamore","Laurel","Locust","Dragon","Spruce","Pine","Balsam","Nutmeg",
+            "Hickory","Birch","Cottonwood","Hemlock"
         };
         int adjIndex = (int)(Math.random() * adjectives.length);
-        int nounIndex =  (int)(Math.random() * nouns.length);
-        return adjectives[adjIndex] + " " + nouns[nounIndex] + " River";
+        String firstHalf =  nouns[(int)(Math.random() * nouns.length)];
+        firstHalf = firstHalf.substring(0, firstHalf.length()/2);
+        String secondHalf =  nouns[(int)(Math.random() * nouns.length)];
+        secondHalf = secondHalf.substring(secondHalf.length()/2);
+        return adjectives[adjIndex] + " " + firstHalf + secondHalf + " River";
     }
 
     // Constructors mirroring the superclass
