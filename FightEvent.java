@@ -15,12 +15,12 @@ public class FightEvent {
         FRIENDLY_NPC
     }
 
-    private Random rng;
+    
     private Player player;
     private Npc currentNpc;
 
-    public FightEvent(Random rng, Player player, Npc currentNpc) {
-        this.rng = rng;
+    public FightEvent(Player player, Npc currentNpc) {
+        
         this.player = player;
         this.currentNpc = currentNpc;
     }
@@ -44,7 +44,7 @@ public class FightEvent {
             String command = input.next();
             command = command.toLowerCase();
             if (command.equals("r")) {
-                int escapeDiceRoll = rng.nextInt(6) + 1;
+                int escapeDiceRoll = Main.rng.nextInt(6) + 1;
 
                 if (escapeDiceRoll <= 2) {
                     // 33% escaped without damage
@@ -54,7 +54,7 @@ public class FightEvent {
                 if (escapeDiceRoll <= 4) {
                     // 33% escaped with some extra damage
                     Main.typewriter(50, "You escaped... but " + enemy.getName() + " hits you as you run away...\n");
-                    damageToPlayer = enemy.attackPlayer(rng, player);
+                    damageToPlayer = enemy.attackPlayer(player);
                     player.loseHealth(damageToPlayer);
                     return FightEvent.Outcome.PLAYER_FLED;
                 } else {
@@ -62,12 +62,12 @@ public class FightEvent {
                     Main.typewriter(50, "Oof! Tried to run away, but could not escape!\n");
                 }
             }
-            damageToEnemy = player.attackEnemy(rng, command, enemy);
+            damageToEnemy = player.attackEnemy(command, enemy);
             enemy.loseHealth(damageToEnemy);
             player.getBackpack().removeBrokenItems();
             if (enemy.getHealth() > 0) {
                 // enemyAttackPlayer
-                damageToPlayer = enemy.attackPlayer(rng, player);
+                damageToPlayer = enemy.attackPlayer(player);
                 player.loseHealth(damageToPlayer);
             } else {
                 Main.typewriter(50, enemy.getName() + " fainted! You won the fight!\n");

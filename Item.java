@@ -30,7 +30,7 @@ public class Item
     name = "item name";
     strength = 50;
     description = "item description";
-    magicType = (int)(Math.random()*3+1);
+    magicType = Main.rng.nextInt(3)+1;
     isKey = false;
   }
 

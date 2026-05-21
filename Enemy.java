@@ -69,8 +69,8 @@ public class Enemy extends Npc
     enemyCounter++;
   }
 
-   public int attackPlayer(Random rng, Player player) {
-    int attack = rng.nextInt(6) + rng.nextInt(6) + 2;
+   public int attackPlayer(Player player) {
+    int attack = Main.rng.nextInt(6) + Main.rng.nextInt(6) + 2;
     Main.typewriter(50, " > > > " + this.getName() + " uses " + this.getAttackName() + "\n");
     Main.typewriter(50, " > > > -" + attack + " HP\n");
     return attack;

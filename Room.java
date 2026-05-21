@@ -21,11 +21,24 @@ import java.util.Scanner;
 
 public class Room {
 
-  /*
-   * fight with an enemy. returns the new player.getHealth().
-   */
-  
- 
+  public static String generateName() {
+    String[] adjectives = { "Whispering", "Forgotten", "Shimmering", "Ashen",
+        "Howling", "Serpent's", "Sunken", "Smuggler's", "Frozen", "Blighted", "Crimson",
+        "Weeping Willow", "Obsidian", "Misty", "Sunspire", "Dead Man's",
+        "Scorched", "Overgrown", "Silent", "Windworn", "Twilight", "Glacial",
+        "Echoing", "Sacred", "Stormwashed", "Pine", "Oak","Fool's","Abandoned","Ruined",
+        "Lost","Shadow"
+    };
+    String[] nouns = { "Woods", "Crossroads", "Peaks", "Badlands", "Mire", "Valley",
+        "Farm","Tundra","Hills","Canyon","Grove","Crags","Pasture", "Vineyard","Bog",
+        "Highlands","Steppes","Creek","Plains","Ruins","Oasis","Marsh","Swamp","Wetland",
+        "Mesa","Homestead","Chasm","Ranch","Ridge","Cliffs","Orchard","Garden"
+    };
+    int adjIndex = Main.rng.nextInt(adjectives.length);
+    int nounIndex = Main.rng.nextInt(nouns.length);
+    return adjectives[adjIndex] + " " + nouns[nounIndex];
+  }
+
   private String name;
   private String description;
   private Npc character;
@@ -53,7 +66,7 @@ public class Room {
     roomItem = other.roomItem;
   }
 
-  public void enterRoom(Player player, Random rng) {
+  public void enterRoom(Player player) {
     Scanner input = new Scanner(System.in);
     Npc roomNpc = getCharacter();
     Item roomItem = getItem();
@@ -89,11 +102,12 @@ public class Room {
         Main.typewriter(50, "There is nobody here to talk\n");
       }
     } else if (command.equals("fight")) {
-      FightEvent fight = new FightEvent(rng, player, roomNpc);
+      FightEvent fight = new FightEvent(player, roomNpc);
       FightEvent.Outcome fightResult = fight.execute();
 
     } else if (command.equals("quit")) {
       Main.typewriter(50, "Thanks for playing\n");
+      System.exit(0);
     } else {
       Main.typewriter(50, "I don't know how to " + command);
       Main.typewriter(50,
@@ -102,7 +116,6 @@ public class Room {
               + (this.getCharacter() == null ? "" : "talk, fight, ") + "or quit.\n");
     }
   }
-
 
   public String getPossibleDirections(Player player) {
     int[] myLocation = player.getLocation();
@@ -124,7 +137,6 @@ public class Room {
 
     return possibleDirections;
   }
-
 
   // methods go down here
   public Npc getCharacter() {

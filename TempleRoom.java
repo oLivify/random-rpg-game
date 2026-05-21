@@ -5,7 +5,7 @@ public class TempleRoom extends Room{
     private String templeName;
     private boolean hasBeenUnlocked;
 
-    private static String generateRoomName(){
+    public static String generateName(){
         return "";
     }
 

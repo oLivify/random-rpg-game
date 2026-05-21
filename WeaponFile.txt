@@ -1,3 +1,12 @@
-sword,a steel blade used for fighting
-scythe,a tool farmers use
-rake,a makeshift weapon in a pinch
+sword,a steel blade used for fighting,70
+scythe,a tool farmers use,70
+iron ax,a woodcutter's tool,70
+iron sledgehammer,a heavy duty tool,30
+rake,a makeshift weapon in a pinch,30
+boat oar,a sturdy wooden paddle,30
+hunting spear,a hunter's tool,30
+fishing harpoon,a fisherman's tool,30
+wooden mop,for battling spills,10
+rubber hammer,for gentle hammering,10
+tree branch,this is just a stick,10
+soup ladle,good for fighting hunger,10

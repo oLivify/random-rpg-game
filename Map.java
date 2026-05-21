@@ -6,7 +6,7 @@ public class Map {
     
 
     private Room[][] gameMap;
-    private Random rng;
+    
 
     // 5 x 5 grid, 25 rooms
     // 1 spawn point at middle of map [row 2, col 2] normal room
@@ -17,25 +17,30 @@ public class Map {
     // 6 ambush rooms
     // 3 boring, normal rooms
 
-    public Map(Random rng){
-        this.rng = rng;
+    public Map(){
+        
         gameMap = new Room[WORLD_HEIGHT][WORLD_WIDTH];
         setupRiver();
-        boolean oddQuadrantsHaveHealing = rng.nextBoolean();
+        boolean oddQuadrantsHaveHealing = Main.rng.nextBoolean();
         setupQuadrant(0,WORLD_WIDTH-2, oddQuadrantsHaveHealing);
         setupQuadrant(0,0, !oddQuadrantsHaveHealing);
         setupQuadrant(WORLD_HEIGHT-2,0, oddQuadrantsHaveHealing);
         setupQuadrant(WORLD_HEIGHT-2,WORLD_WIDTH-2, !oddQuadrantsHaveHealing);
         fillAllEmptyRooms();
         // finally, ensure that spawn point is a normal room
-        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room();
+        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.generateName());
         displayMap(); // for debugging only
     }
 
     public void displayMap(){
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
-                System.out.print(gameMap[row][col].getName() + " | ");
+                String roomName = gameMap[row][col].getName();
+                String spaceString = "                      |  ";
+                if(roomName.length() < spaceString.length()){
+                    spaceString = spaceString.substring(roomName.length());
+                }
+                System.out.print( roomName + spaceString);
             }
             System.out.println();
         }
@@ -54,7 +59,7 @@ public class Map {
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
                 if(gameMap[row][col] == null){
-                    gameMap[row][col] = new Room();
+                    gameMap[row][col] = new Room(Room.generateName());
                 }
             }
         }
@@ -70,7 +75,7 @@ public class Map {
                 index++;
             }
         }
-        Main.shuffleArray(rng, spots);
+        Main.shuffleArray(spots);
         // there are 4 spots in this quadrant
         int counter = 0;
         for(int i = 0; i < spots.length; i++){
@@ -78,12 +83,13 @@ public class Map {
             int colOffset = spots[i] % 10;
             if(counter == 0 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place a temple here
-                Room tempRoom = new Room(); // this SHOULD be TempleRoom
+                Room tempRoom = new TempleRoom("Temple " + (startingRow*10 + startingCol)); // this SHOULD be TempleRoom
+                gameMap[startingRow + rowOffset][startingCol + colOffset] = tempRoom;
                 counter++;
             }
             if(counter == 1 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place an enemy with a key here
-                Room keyRoom = new AmbushRoom();
+                Room keyRoom = new AmbushRoom("Ambush");
                 Enemy keyHoldingEnemy = new Enemy();
                 keyRoom.setCharacter(keyHoldingEnemy);
                 gameMap[startingRow + rowOffset][startingCol + colOffset] = keyRoom;
@@ -92,7 +98,7 @@ public class Map {
             if(counter == 2 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // either odd number quadrants or even number quadrants have a healing room
                 if(hasHealingRoom){
-                    Room healingRoom = new HealingRoom();
+                    Room healingRoom = new HealingRoom("Healing");
                     gameMap[startingRow + rowOffset][startingCol + colOffset] = healingRoom;
                 }
                 counter++;
@@ -103,16 +109,16 @@ public class Map {
     public void setupRiver(){
         for(int row = 0; row < WORLD_HEIGHT; row++){
             // col 1, 2, or 3
-            int col = rng.nextInt(3) + WORLD_HEIGHT / 2 - 1;
+            int col = Main.rng.nextInt(3) + WORLD_HEIGHT / 2 - 1;
             // if spawn point
             if(row == WORLD_HEIGHT / 2 && col == WORLD_WIDTH / 2){
-                if(rng.nextInt(2) == 0){
+                if(Main.rng.nextInt(2) == 0){
                     col++;
                 } else {
                     col--;
                 }
             }
-            gameMap[row][col] = new RiverRoom();
+            gameMap[row][col] = new RiverRoom(RiverRoom.generateName());
         }
     }
 }

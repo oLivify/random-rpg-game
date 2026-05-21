@@ -85,16 +85,18 @@ public class Main {
 
   private static boolean isGameWon = false;
 
+  public static final Random rng = new Random();
+
   public static void main(String[] args) throws FileNotFoundException {
     Scanner input = new Scanner(System.in);
     Main.typewriter(5, "Please type a random seed number: ");
-    Random rng = new Random(input.nextInt());
+    Main.rng.setSeed(input.nextInt());
     // create world now please
-    Map map = new Map(rng);
+    Map map = new Map();
     Player player = new Player();
 
     // loading weapons from text file
-    File weaponData = new File("C:\\Users\\900955\\Documents\\GitHub\\random-rpg-game\\WeaponFile.txt"); //not sure how this is going to work on multiple devices.
+    File weaponData = new File(".\\WeaponFile.txt"); //not sure how this is going to work on multiple devices.
     Scanner fileInput = new Scanner(weaponData);
     ArrayList<Item> enemyDrops = new ArrayList<Item>(); //enemy drop list
     String wName = "";
@@ -102,7 +104,7 @@ public class Main {
     int wDamage = 0;
 
     while(fileInput.hasNext()) {
-      String[] parts = fileInput.next().split(",");
+      String[] parts = fileInput.nextLine().split(",");
       wName = parts[0];
       wDescriptions = parts[1];
       wDamage = Integer.parseInt(parts[2]);
@@ -110,13 +112,13 @@ public class Main {
     }
 
     // make a test enemy | ignore this i needed a visual representation
-    Enemy test1 = new Enemy("bob", "a floating piece of paper in the sky", enemyDrops.get((int) (Math.random() * enemyDrops.size()))); //enemy drops random weapon
+    Enemy test1 = new Enemy("bob", "a floating piece of paper in the sky", enemyDrops.get(Main.rng.nextInt(enemyDrops.size()))); //enemy drops random weapon
 
     // the game loop
     while (true) {
       typewriter(50, "\n- - -\n");
       Room currentRoom = map.getLocation(player.getLocation());
-      currentRoom.enterRoom(player, rng);
+      currentRoom.enterRoom(player);
 
       
       if (isGameWon == true) {
@@ -134,11 +136,11 @@ public class Main {
  
 
   // Implementing Fisher–Yates shuffle
-  static void shuffleArray(Random rng, int[] arr)
+  static void shuffleArray(int[] arr)
   {
     for (int i = arr.length - 1; i > 0; i--)
     {
-      int index = rng.nextInt(i + 1);
+      int index = Main.rng.nextInt(i + 1);
       // Simple swap
       int temp = arr[index];
       arr[index] = arr[i];
