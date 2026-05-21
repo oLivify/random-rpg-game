@@ -1,12 +1,43 @@
+greatsword,a massive two-handed blade requiring immense strength to wield,75
 sword,a steel blade used for fighting,70
 scythe,a tool farmers use,70
 iron ax,a woodcutter's tool,70
+halberd,a versatile polearm combining a spear and an axe head,60
+heavy pickaxe,miners use it to shatter stone,60
+heavy crossbow,a mechanical weapon that fires high-velocity bolts,60
+morningstar,a brutal spiked iron ball mounted on a sturdy handle,60
+iron mace,a spiked club designed to crush heavy armor,50
+wood axe,a lightweight tool for chopping kindling,50
+blacksmith hammer,forged to shape hot iron,50
+rusty sword,dull and flaking with orange decay,45
+rusty scythe,a forgotten reaping tool with a heavily oxidized blade,45
+rusty iron ax,a battered woodcutter's tool with a brittle, corroded head,45
+meat cleaver,a heavy blade from the butcher's block,40
+sickle,a short-handled blade for reaping grain,40
+butcher knife,sharp enough to slice through bone,40
+rusty pickaxe,a worn mining tool with a deeply pitted iron point,35
+rusty axe,showing heavy rust along its worn edge,35
+iron dagger,a concealed pocket blade favored by rogues,30
 iron sledgehammer,a heavy duty tool,30
 rake,a makeshift weapon in a pinch,30
+pitchfork,a sharp tool for moving hay,30
+iron shovel,useful for digging holes or graves,30
 boat oar,a sturdy wooden paddle,30
 hunting spear,a hunter's tool,30
+cast iron skillet,heavy enough to crack skulls,30
 fishing harpoon,a fisherman's tool,30
+leather whip,a herder's tool for driving cattle,30
+rusty crowbar,great for prying open crates or doors,30
+wooden staff,a simple blunt rod preferred by travelers and mages,25
+rusty meat cleaver,a stained kitchen blade with rough orange patches,25
+rusty sickle,a crescent hand-blade that has lost its clean edge to decay,25
+rusty hammer,an old smithing tool covered in a layer of rough brown rust,25
+rusty butcher knife,a once-sharp culinary tool now dulled by flakes of iron oxide,25
+wooden club,a crude heavy bludgeon fashioned from a thick log,20
+leather sling,a simple strap used to hurl smooth stones at high speed,15
 wooden mop,for battling spills,10
+wooden rolling pin,a baker's defensive tool of choice,10
+wooden broom,good for sweeping up trouble,10
 rubber hammer,for gentle hammering,10
 tree branch,this is just a stick,10
 soup ladle,good for fighting hunger,10
