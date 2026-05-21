@@ -14,7 +14,7 @@ public class Inventory {
 
     public void addItem(Item newItem){
         removeBrokenItems();
-
+        storage.add(newItem);
     }
 
     public Inventory clone(){
