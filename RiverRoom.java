@@ -35,7 +35,7 @@ public class RiverRoom extends Room {
     public void enterRoom(Player player) {
         Scanner input = new Scanner(System.in);
         Main.typewriter(5, "\n" + getName());
-        Main.typewriter(5, "\nCross the river? y or n");
+        Main.typewriter(5, "\nCross the river? [y] or [n]: ");
 
         if(input.nextLine().toLowerCase().equals("y")){
             RiverCrossingEvent crossing = new RiverCrossingEvent(player, this);

@@ -84,7 +84,7 @@ public class Room {
       Main.typewriter(5, "You are holding " + player.getBackpack().getSize() + " items.\n");
     }
     // prompt
-    Main.typewriter(50,
+    Main.typewriter(5,
         "\nWHAT NEXT? " + getPossibleDirections(player)
             + (getItem() == null ? "" : "take, ")
             + (getCharacter() == null ? "" : "talk, fight, ") + "or quit: ");

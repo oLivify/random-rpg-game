@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class Inventory {
     /*
@@ -42,6 +42,16 @@ public class Inventory {
         return storage.size();
     }
 
+    public int findKey() {
+        System.out.println(storage);
+        for(int i=0; i<storage.size();i++){
+            if(storage.get(i).isKey()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public Item loseRandomItem(){
         if(storage.size() == 0){
             return null;
@@ -65,4 +75,6 @@ public class Inventory {
         }
         return result;
     }
+
+    
 }

@@ -35,33 +35,33 @@ public class RiverCrossingEvent {
 
         
         Main.typewriter(5,
-                "You must navigate the treacherous waters. Reach exactly 21 yards or force the river current to bust!");
+                "You must navigate the treacherous waters. Reach exactly 21 yards or force the river current to bust! ");
 
         // --- Player's Turn ---
         while (playing) {
-            System.out.print("Do you want to [row] or [stop]? ");
+            System.out.print("Do you want to [row] or [stop]: ");
             String choice = input.nextLine().trim().toLowerCase();
 
             if (choice.equals("row")) {
                 int playerRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
                 playerYards += playerRoll;
                 Main.typewriter(5,
-                        "You rowed hard and gained " + playerRoll + " yards. Total: " + playerYards + " yards.");
+                        "You rowed hard and gained " + playerRoll + " yards. Total: " + playerYards + " yards.\n");
 
                 if (playerYards == 21) {
-                    Main.typewriter(5, "You reached exactly 21 yards!");
-                    Main.typewriter(5, "Success!");
+                    Main.typewriter(5, "You reached exactly 21 yards! ");
+                    Main.typewriter(5, "Success!\n");
                     return RiverCrossingEvent.Outcome.SUCCESS;
                 } else if (playerYards > 21) {
-                    Main.typewriter(5, "Bust! You over-rowed and lost control at " + playerYards + " yards.");
+                    Main.typewriter(5, "Bust! You over-rowed and lost control at " + playerYards + " yards. ");
                     if(player.getBackpack().getSize() > 0){
                         // lose a random item
                         Item lostItem = player.loseRandomItem();
                         if(lostItem != null){
-                            Main.typewriter(5, "Your " + lostItem + " washed away in with the current!");
+                            Main.typewriter(5, "Your " + lostItem + " washed away in with the current! ");
                         }
                     }
-                    Main.typewriter(5, "The current washes you back to where you came from...");
+                    Main.typewriter(5, "The current washes you back to where you came from... ");
                     return RiverCrossingEvent.Outcome.PLAYER_BUSTS;
                 } else {
                     // current's turn if currentYards < 17
@@ -69,13 +69,13 @@ public class RiverCrossingEvent {
                         int currentRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
                         currentYards += currentRoll;
                         Main.typewriter(5, "The river current surges forward " + currentRoll + " yards. River Total: "
-                                + currentYards + " yards.");
+                                + currentYards + " yards. ");
                         if(currentYards > 21){
-                            Main.typewriter(5, "The currents turns and helps push you to the opposite shore.");
-                            Main.typewriter(5, "Success!");
+                            Main.typewriter(5, "The currents turns and helps push you to the opposite shore. ");
+                            Main.typewriter(5, "Success! ");
                             return RiverCrossingEvent.Outcome.SUCCESS;
                         } else if(currentYards == 21){
-                            Main.typewriter(5, "The current washes you back to where you came from...");
+                            Main.typewriter(5, "The current washes you back to where you came from... ");
                             return RiverCrossingEvent.Outcome.FAILURE;
                         }
                     } else {
@@ -83,15 +83,15 @@ public class RiverCrossingEvent {
                     }
 
                     if (playerYards >= currentYards) {
-                        Main.typewriter(5, "You're rowing at an excellent pace!");
+                        Main.typewriter(5, "You're rowing at an excellent pace!\n");
                     } else if (playerYards < currentYards) {
-                        Main.typewriter(5, "The current is overpowering you!");
+                        Main.typewriter(5, "The current is overpowering you! ");
                     }
                 }
             } else if (choice.equals("stop")) {
                 playing = false;
             } else {
-                Main.typewriter(5, "Invalid choice. Please type 'row' or 'stop'.");
+                Main.typewriter(5, "Invalid choice. Please type [row] or [stop].");
             }
         }
 
@@ -108,19 +108,19 @@ public class RiverCrossingEvent {
             int currentRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
             currentYards += currentRoll;
             Main.typewriter(5, "The river current surges forward " + currentRoll + " yards. River Total: "
-                    + currentYards + " yards.");
+                    + currentYards + " yards.\n");
         }
 
         // --- Resolution ---
         if (currentYards > 21) {
             Main.typewriter(5,
-                    "The river current pushes you " + currentYards + " yards! You managed to hold your ground.");
-            Main.typewriter(5, "Success! You safely navigate through the " + room.getName() + ".");
+                    "The river current pushes you " + currentYards + " yards! You managed to hold your ground.\n");
+            Main.typewriter(5, "Success! You safely navigate through the " + room.getName() + ".\n");
             return RiverCrossingEvent.Outcome.SUCCESS;
         } else {
             Main.typewriter(5, "The river current reached " + currentYards + " yards, overpowering your " + playerYards
-                    + " yards.");
-            Main.typewriter(5, "You stopped too soon! The current sweeps you back to your previous room.");
+                    + " yards.\n");
+            Main.typewriter(5, "You stopped too soon! The current sweeps you back to your previous room.\n");
             return RiverCrossingEvent.Outcome.FAILURE;
         }
         
