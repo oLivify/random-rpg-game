@@ -91,7 +91,7 @@ public class Item
   }
 
   public String toString(){
-    return description;
+    return name + " "+ description;
   }
 
   public void weaken(){

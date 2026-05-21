@@ -14,5 +14,7 @@ public class HealingRoom extends Room {
 
     public void enterRoom(Player player) {
         player.gainHealth(); // Mr. Riley adding
+        super.enterRoom(player);
     }
+
 }

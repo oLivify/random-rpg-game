@@ -110,9 +110,11 @@ public class Main {
       wDamage = Integer.parseInt(parts[2]);
       enemyDrops.add(new Weapon(wName, wDescriptions, wDamage));
     }
+    
 
     // make a test enemy | ignore this i needed a visual representation
     Enemy test1 = new Enemy("bob", "a floating piece of paper in the sky", enemyDrops.get(Main.rng.nextInt(enemyDrops.size()))); //enemy drops random weapon
+    
 
     // the game loop
     while (true) {

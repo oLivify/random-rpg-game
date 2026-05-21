@@ -16,6 +16,8 @@ public class Map {
     // ✅ 2 healing rooms
     // 6 ambush rooms
     // 3 boring, normal rooms
+    
+
 
     public Map(){
         
@@ -65,6 +67,26 @@ public class Map {
         }
     }
 
+    public void makeHealingRoom(int startingRow, int rowOffset, int startingCol, int colOffset) {
+        Room healingRoom = new HealingRoom("Healing");
+        gameMap[startingRow + rowOffset][startingCol + colOffset] = healingRoom;
+        // just a test item for keys
+        Item key1 = new Item("Golden Key", "Used to unlock fancy doors", true);
+        healingRoom.setItem(key1);
+    }
+
+    public void makeAmbushRoom(int startingRow, int rowOffset, int startingCol, int colOffset) {
+        Room keyRoom = new AmbushRoom("Ambush");
+        Enemy keyHoldingEnemy = new Enemy();
+        keyRoom.setCharacter(keyHoldingEnemy);
+        gameMap[startingRow + rowOffset][startingCol + colOffset] = keyRoom;
+    }
+
+    public void makeTempleRoom(int startingRow, int rowOffset, int startingCol, int colOffset) { 
+        Room tempRoom = new TempleRoom("Temple " + (startingRow*10 + startingCol)); // this SHOULD be TempleRoom
+        gameMap[startingRow + rowOffset][startingCol + colOffset] = tempRoom;
+    }
+
     public void setupQuadrant(int startingRow, int startingCol, boolean hasHealingRoom){
         int[] spots = new int[Map.WORLD_HEIGHT/2 * Map.WORLD_WIDTH/2];
         // make offset values
@@ -83,28 +105,25 @@ public class Map {
             int colOffset = spots[i] % 10;
             if(counter == 0 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place a temple here
-                Room tempRoom = new TempleRoom("Temple " + (startingRow*10 + startingCol)); // this SHOULD be TempleRoom
-                gameMap[startingRow + rowOffset][startingCol + colOffset] = tempRoom;
+                makeTempleRoom(startingRow,rowOffset, startingCol, colOffset);
                 counter++;
             }
             if(counter == 1 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place an enemy with a key here
-                Room keyRoom = new AmbushRoom("Ambush");
-                Enemy keyHoldingEnemy = new Enemy();
-                keyRoom.setCharacter(keyHoldingEnemy);
-                gameMap[startingRow + rowOffset][startingCol + colOffset] = keyRoom;
+                makeAmbushRoom(startingRow,rowOffset, startingCol, colOffset);
                 counter++;
             }
             if(counter == 2 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // either odd number quadrants or even number quadrants have a healing room
                 if(hasHealingRoom){
-                    Room healingRoom = new HealingRoom("Healing");
-                    gameMap[startingRow + rowOffset][startingCol + colOffset] = healingRoom;
+                    makeHealingRoom(startingRow,rowOffset, startingCol, colOffset);
                 }
                 counter++;
             }
         }
     }
+
+     
 
     public void setupRiver(){
         final int RIVER_MIN_COLUMN = 1;
