@@ -42,11 +42,11 @@ public class Inventory {
         return storage.size();
     }
 
-    public Item loseRandomItem(Random rng){
+    public Item loseRandomItem(){
         if(storage.size() == 0){
             return null;
         }
-        return storage.remove(rng.nextInt(storage.size()));
+        return storage.remove(Main.rng.nextInt(storage.size()));
     }
 
     public void removeBrokenItems(){

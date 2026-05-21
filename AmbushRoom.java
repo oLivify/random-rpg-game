@@ -7,23 +7,23 @@ public class AmbushRoom extends Room {
         super();
     }
 
-    public AmbushRoom(String name_, Random rng) {
+    public AmbushRoom(String name_) {
         super(name_);
     }
 
-    public void enterRoom(Player player, Random rng) {
+    public void enterRoom(Player player) {
         Scanner input = new Scanner(System.in);
         Main.typewriter(5, "You get ambushed by an enemy!");
-        ((Enemy)getCharacter()).attackPlayer(rng, player);
+        ((Enemy)getCharacter()).attackPlayer(player);
         // construct a new FightEvent
-        FightEvent fight = new FightEvent(rng, player, getCharacter());
+        FightEvent fight = new FightEvent(player, getCharacter());
         // execute the fight and it returns an outcome
         FightEvent.Outcome fightResult = fight.execute();
         if(fightResult == FightEvent.Outcome.PLAYER_WIN){
             // enemy died
             super.setCharacter(null);
             // enter the normal room
-            super.enterRoom(player,rng);
+            super.enterRoom(player);
         }
         else if(fightResult == FightEvent.Outcome.PLAYER_FLED){
             player.moveBackwards();

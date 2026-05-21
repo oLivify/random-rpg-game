@@ -6,7 +6,7 @@ public class Map {
     
 
     private Room[][] gameMap;
-    private Random rng;
+    
 
     // 5 x 5 grid, 25 rooms
     // 1 spawn point at middle of map [row 2, col 2] normal room
@@ -17,11 +17,11 @@ public class Map {
     // 6 ambush rooms
     // 3 boring, normal rooms
 
-    public Map(Random rng){
-        this.rng = rng;
+    public Map(){
+        
         gameMap = new Room[WORLD_HEIGHT][WORLD_WIDTH];
         setupRiver();
-        boolean oddQuadrantsHaveHealing = rng.nextBoolean();
+        boolean oddQuadrantsHaveHealing = Main.rng.nextBoolean();
         setupQuadrant(0,WORLD_WIDTH-2, oddQuadrantsHaveHealing);
         setupQuadrant(0,0, !oddQuadrantsHaveHealing);
         setupQuadrant(WORLD_HEIGHT-2,0, oddQuadrantsHaveHealing);
@@ -75,7 +75,7 @@ public class Map {
                 index++;
             }
         }
-        Main.shuffleArray(rng, spots);
+        Main.shuffleArray(spots);
         // there are 4 spots in this quadrant
         int counter = 0;
         for(int i = 0; i < spots.length; i++){
@@ -89,7 +89,7 @@ public class Map {
             }
             if(counter == 1 && gameMap[startingRow + rowOffset][startingCol + colOffset] == null){
                 // place an enemy with a key here
-                Room keyRoom = new AmbushRoom("Ambush", rng);
+                Room keyRoom = new AmbushRoom("Ambush");
                 Enemy keyHoldingEnemy = new Enemy();
                 keyRoom.setCharacter(keyHoldingEnemy);
                 gameMap[startingRow + rowOffset][startingCol + colOffset] = keyRoom;
@@ -109,10 +109,10 @@ public class Map {
     public void setupRiver(){
         for(int row = 0; row < WORLD_HEIGHT; row++){
             // col 1, 2, or 3
-            int col = rng.nextInt(3) + WORLD_HEIGHT / 2 - 1;
+            int col = Main.rng.nextInt(3) + WORLD_HEIGHT / 2 - 1;
             // if spawn point
             if(row == WORLD_HEIGHT / 2 && col == WORLD_WIDTH / 2){
-                if(rng.nextInt(2) == 0){
+                if(Main.rng.nextInt(2) == 0){
                     col++;
                 } else {
                     col--;

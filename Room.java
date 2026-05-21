@@ -34,8 +34,8 @@ public class Room {
         "Highlands","Steppes","Creek","Plains","Ruins","Oasis","Marsh","Swamp","Wetland",
         "Mesa","Homestead","Chasm","Ranch","Ridge","Cliffs","Orchard","Garden"
     };
-    int adjIndex = (int) (Math.random() * adjectives.length);
-    int nounIndex = (int) (Math.random() * nouns.length);
+    int adjIndex = Main.rng.nextInt(adjectives.length);
+    int nounIndex = Main.rng.nextInt(nouns.length);
     return adjectives[adjIndex] + " " + nouns[nounIndex];
   }
 
@@ -66,7 +66,7 @@ public class Room {
     roomItem = other.roomItem;
   }
 
-  public void enterRoom(Player player, Random rng) {
+  public void enterRoom(Player player) {
     Scanner input = new Scanner(System.in);
     Npc roomNpc = getCharacter();
     Item roomItem = getItem();
@@ -102,7 +102,7 @@ public class Room {
         Main.typewriter(50, "There is nobody here to talk\n");
       }
     } else if (command.equals("fight")) {
-      FightEvent fight = new FightEvent(rng, player, roomNpc);
+      FightEvent fight = new FightEvent(player, roomNpc);
       FightEvent.Outcome fightResult = fight.execute();
 
     } else if (command.equals("quit")) {

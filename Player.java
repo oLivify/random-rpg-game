@@ -2,9 +2,9 @@
 Player (12 tasks) Joshua doing this one
   ✅ - private instance vars for location, previousLocation, health, kickStrength, punchStrength, enemiesDefeated, ArrayList<Item> backpack
   ✅ + NoArgsConstructor
-  ✅ + attackEnemy(rng, command, e)
+  ✅ + attackEnemy(command, e)
   ✅ + + void displayBackpack()
-  ✅ + fight(rng, currentNpc)
+  ✅ + fight(currentNpc)
   ✅ + void gainHealth()
   ✅ + int getEnemiesDefeated
   ✅ + int getHealth
@@ -38,7 +38,7 @@ public class Player {
 
     public Player() {
         health = 100;
-        kickStrength = (int) (Math.random() * 6 + 1) + (int) (Math.random() * 6 + 1);
+        kickStrength = Main.rng.nextInt(6) + 1 + Main.rng.nextInt(6) + 1;
         punchStrength = 13 - kickStrength;
         enemiesDefeated = 0;
         currentRoom = null;
@@ -51,18 +51,18 @@ public class Player {
         backpack = new Inventory();
     }
 
-    public int attackEnemy(Random rng, String command, Enemy e) {
+    public int attackEnemy(String command, Enemy e) {
         Scanner input = new Scanner(System.in);
         int attack = 0;
         if (command.equals("p")) {
             Main.typewriter(50, "You used PUNCH\n");
-            attack = rng.nextInt(punchStrength) + rng.nextInt(punchStrength) + 1;
+            attack = Main.rng.nextInt(punchStrength) + Main.rng.nextInt(punchStrength) + 1;
             if (attack >= 20) {
                 Main.typewriter(50, "It's SUPER effective!\n");
             }
         } else if (command.equals("k")) {
             Main.typewriter(50, "You used KICK\n");
-            attack = rng.nextInt(kickStrength) + rng.nextInt(kickStrength) + 1;
+            attack = Main.rng.nextInt(kickStrength) + Main.rng.nextInt(kickStrength) + 1;
             if (attack >= 20) {
                 Main.typewriter(50, "It's SUPER effective!\n");
             }
@@ -150,8 +150,8 @@ public class Player {
         health -= damage;
     }
 
-    public Item loseRandomItem(Random rng){
-        return backpack.loseRandomItem(rng);
+    public Item loseRandomItem(){
+        return backpack.loseRandomItem();
     }
 
 

@@ -11,12 +11,11 @@ public class RiverCrossingEvent {
         PLAYER_BUSTS // lose a random item
     }
 
-    private Random rng;
+
     private Player player;
     private Room room;
 
-    public RiverCrossingEvent(Random rng, Player player, Room room){
-        this.rng = rng;
+    public RiverCrossingEvent(Player player, Room room){
         this.player = player;
         this.room = room;
     }
@@ -44,7 +43,7 @@ public class RiverCrossingEvent {
             String choice = input.nextLine().trim().toLowerCase();
 
             if (choice.equals("row")) {
-                int playerRoll = rng.nextInt(6) + 1; // 1-6 yards
+                int playerRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
                 playerYards += playerRoll;
                 Main.typewriter(5,
                         "You rowed hard and gained " + playerRoll + " yards. Total: " + playerYards + " yards.");
@@ -57,7 +56,7 @@ public class RiverCrossingEvent {
                     Main.typewriter(5, "Bust! You over-rowed and lost control at " + playerYards + " yards.");
                     if(player.getBackpack().getSize() > 0){
                         // lose a random item
-                        Item lostItem = player.loseRandomItem(rng);
+                        Item lostItem = player.loseRandomItem();
                         if(lostItem != null){
                             Main.typewriter(5, "Your " + lostItem + " washed away in with the current!");
                         }
@@ -67,7 +66,7 @@ public class RiverCrossingEvent {
                 } else {
                     // current's turn if currentYards < 17
                     if(currentYards < 17){
-                        int currentRoll = rng.nextInt(6) + 1; // 1-6 yards
+                        int currentRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
                         currentYards += currentRoll;
                         Main.typewriter(5, "The river current surges forward " + currentRoll + " yards. River Total: "
                                 + currentYards + " yards.");
@@ -106,7 +105,7 @@ public class RiverCrossingEvent {
         // --- River's Turn ---
         Main.typewriter(5, "\nYou stop rowing. The river current pushes back...");
         while (currentYards <= playerYards && currentYards < 21) {
-            int currentRoll = rng.nextInt(6) + 1; // 1-6 yards
+            int currentRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
             currentYards += currentRoll;
             Main.typewriter(5, "The river current surges forward " + currentRoll + " yards. River Total: "
                     + currentYards + " yards.");

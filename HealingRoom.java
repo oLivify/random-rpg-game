@@ -12,7 +12,7 @@ public class HealingRoom extends Room {
         super(_name);
     }
 
-    public void enterRoom(Player player, Random rng) {
+    public void enterRoom(Player player) {
         player.gainHealth(); // Mr. Riley adding
     }
 }
