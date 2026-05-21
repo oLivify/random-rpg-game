@@ -1,0 +1,32 @@
+Woods,A dense grove of trees where dappled sunlight barely pierces the thick canopy
+Crossroads,Several dirt paths converge here, marked by a weathered, fading signpost
+Peaks,Biting winds howl across these jagged, snow-dusted mountain summits
+Badlands,Dehydrated earth and strange, wind-sculpted rock stretch under a harsh sun
+Mire,Thick, sucking mud dominates the landscape, smelling heavily of stagnant water
+Valley,A serene, low-lying basin cradled by mountains and carpeted in lush grass
+Farm,Neat rows of tilled soil and ripening crops buzz with rural activity
+Tundra,A vast, frozen expanse of hardy moss bitten by an icy gale
+Hills,Rolling mounds of earth undulate across the landscape like frozen waves
+Canyon,Towering walls of layered stone rise steeply on either side of this gorge
+Grove,A peaceful, secluded cluster of ancient trees around a sunlit clearing
+Crags,Sharp, fractured rock faces jut precariously, offering treacherous footing
+Pasture,An open, fenced field of clover where livestock graze under a blue sky
+Vineyard,Manicured wooden trellises support heavy vines loaded with sweet grapes
+Bog,Spongy, mossy ground sinks beneath your boots, concealing peat-stained water
+Highlands,An elevated country of sweeping, windswept slopes and crisp mountain air
+Steppes,A dry, semi-arid grassland extending infinitely to the horizon
+Creek,A shallow, clear stream babbles merrily over smooth river stones
+Plains,An endless ocean of golden grass sways gently in the breeze
+Ruins,Crumbled stone walls and cracked pillars are slowly reclaimed by nature
+Oasis,A miraculous sanctuary of crystal water and palms hidden in the desert
+Marsh,Low-lying wetlands dominated by tall reeds, cattails, and open water
+Swamp,Murky waters snake between moss-draped roots, heavy with thick fog
+Wetland,An intricate, sodden labyrinth of saturated earth and open water
+Mesa,An isolated, flat-topped hill with sheer cliffs rising above the plains
+Homestead,A modest, hand-built cabin and barn radiating a welcoming hearth-fire
+Chasm,A profound, terrifying rift splits the earth, plunging into darkness
+Ranch,A sprawling property centered around wide corrals and dusty stables
+Ridge,A long, narrow crest of elevated land offering a panoramic view below
+Cliffs,A dramatic precipice where the solid earth drops violently into the abyss
+Orchard,Rows of heavy fruit trees stand in lines, filling the air with sweet scents
+Garden,A vibrant, carefully tended plot bursting with colorful blossoms and paths

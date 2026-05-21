@@ -87,18 +87,30 @@ public class Main {
 
   public static final Random rng = new Random();
 
-  public static void main(String[] args) throws FileNotFoundException {
-    Scanner input = new Scanner(System.in);
-    Main.typewriter(5, "Please type a random seed number: ");
-    Main.rng.setSeed(input.nextInt());
-    // create world now please
-    Map map = new Map();
-    Player player = new Player();
+  public static ArrayList<Room> loadRooms() throws FileNotFoundException{
+    ArrayList<Room> result = new ArrayList<Room>();
+    File roomData = new File(".\\RoomNames.txt");
+    Scanner fileInput = new Scanner(roomData);
+    String rName = "";
+    String rDescription = "";
+    while(fileInput.hasNext()) {
+      String textLine = fileInput.nextLine();
+      int firstCommaIndex = textLine.indexOf(",");
+      rName = textLine.substring(0, firstCommaIndex);
+      rName = Room.randomAdjective() + " " + rName;
+      rDescription = textLine.substring(firstCommaIndex + 1);
 
+      result.add(new Room(rName, rDescription));
+    }
+    return result;
+  }
+
+  public static ArrayList<Item> loadWeapons() throws FileNotFoundException{
+    ArrayList<Item> result = new ArrayList<Item>();
     // loading weapons from text file
     File weaponData = new File(".\\WeaponFile.txt"); //not sure how this is going to work on multiple devices.
     Scanner fileInput = new Scanner(weaponData);
-    ArrayList<Item> enemyDrops = new ArrayList<Item>(); //enemy drop list
+    
     String wName = "";
     String wDescriptions = "";
     int wDamage = 0;
@@ -108,8 +120,22 @@ public class Main {
       wName = parts[0];
       wDescriptions = parts[1];
       wDamage = Integer.parseInt(parts[2]);
-      enemyDrops.add(new Weapon(wName, wDescriptions, wDamage));
+      result.add(new Weapon(wName, wDescriptions, wDamage));
     }
+    return result;
+  }
+
+  public static void main(String[] args) throws FileNotFoundException {
+    Scanner input = new Scanner(System.in);
+    Main.typewriter(5, "Please type a random seed number: ");
+    Main.rng.setSeed(input.nextInt());
+    // create world now please
+    ArrayList<Room> basicRooms = loadRooms();
+    Map map = new Map(basicRooms);
+    Player player = new Player();
+
+    
+    ArrayList<Item> enemyDrops = loadWeapons(); //enemy drop list
     
 
     // make a test enemy | ignore this i needed a visual representation
@@ -149,6 +175,7 @@ public class Main {
       arr[i] = temp;
     }
   }
+
 
   
 

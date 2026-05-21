@@ -16,12 +16,18 @@ Room (9 tasks)
 ✅ + toString() // returns the description DONE
 */
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Room {
 
-  public static String generateName() {
+  public static Room removeRandom(ArrayList<Room> mylist){
+    int index = Main.rng.nextInt(mylist.size());
+    return mylist.remove(index);
+  }
+
+  public static String randomAdjective() {
     String[] adjectives = { "Whispering", "Forgotten", "Shimmering", "Ashen",
         "Howling", "Serpent's", "Sunken", "Smuggler's", "Frozen", "Blighted", "Crimson",
         "Weeping Willow", "Obsidian", "Misty", "Sunspire", "Dead Man's",
@@ -29,14 +35,8 @@ public class Room {
         "Echoing", "Sacred", "Stormwashed", "Pine", "Oak", "Fool's", "Abandoned", "Ruined",
         "Lost", "Shadow"
     };
-    String[] nouns = { "Woods", "Crossroads", "Peaks", "Badlands", "Mire", "Valley",
-        "Farm", "Tundra", "Hills", "Canyon", "Grove", "Crags", "Pasture", "Vineyard", "Bog",
-        "Highlands", "Steppes", "Creek", "Plains", "Ruins", "Oasis", "Marsh", "Swamp", "Wetland",
-        "Mesa", "Homestead", "Chasm", "Ranch", "Ridge", "Cliffs", "Orchard", "Garden"
-    };
     int adjIndex = Main.rng.nextInt(adjectives.length);
-    int nounIndex = Main.rng.nextInt(nouns.length);
-    return adjectives[adjIndex] + " " + nouns[nounIndex];
+    return adjectives[adjIndex];
   }
 
   private String name;
@@ -55,6 +55,13 @@ public class Room {
   public Room(String _name) {
     name = _name;
     description = "room description";
+    character = null;
+    roomItem = null;
+  }
+
+  public Room(String _name, String _description) {
+    name = _name;
+    description = _description;
     character = null;
     roomItem = null;
   }

@@ -108,7 +108,7 @@ public class Player {
     public void gainHealth() {
         if (health <= 100 && health > 0) {
             int temp = (int) ((100 - health) * 0.5);
-            Main.typewriter(5, "*** Gained +" + temp + " health ***");
+            Main.typewriter(5, "*** Gained +" + temp + " health ***\n");
             health += temp;
         }
     }

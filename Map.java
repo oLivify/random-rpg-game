@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
@@ -19,18 +20,18 @@ public class Map {
     
 
 
-    public Map(){
+    public Map(ArrayList<Room> roomList){
         
         gameMap = new Room[WORLD_HEIGHT][WORLD_WIDTH];
         setupRiver();
         boolean oddQuadrantsHaveHealing = Main.rng.nextBoolean();
-        setupQuadrant(0,WORLD_WIDTH-2, oddQuadrantsHaveHealing);
-        setupQuadrant(0,0, !oddQuadrantsHaveHealing);
-        setupQuadrant(WORLD_HEIGHT-2,0, oddQuadrantsHaveHealing);
-        setupQuadrant(WORLD_HEIGHT-2,WORLD_WIDTH-2, !oddQuadrantsHaveHealing);
-        fillAllEmptyRooms();
+        setupQuadrant(0,WORLD_WIDTH-2, oddQuadrantsHaveHealing); // Q1
+        setupQuadrant(0,0, !oddQuadrantsHaveHealing); // Q2
+        setupQuadrant(WORLD_HEIGHT-2,0, oddQuadrantsHaveHealing); // Q3
+        setupQuadrant(WORLD_HEIGHT-2,WORLD_WIDTH-2, !oddQuadrantsHaveHealing); // Q4
+        fillAllEmptyRooms(roomList);
         // finally, ensure that spawn point is a normal room
-        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.generateName());
+        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.removeRandom(roomList));
         displayMap(); // for debugging only
     }
 
@@ -57,11 +58,11 @@ public class Map {
         return null;
     }
 
-    public void fillAllEmptyRooms(){
+    public void fillAllEmptyRooms(ArrayList<Room> roomList){
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
                 if(gameMap[row][col] == null){
-                    gameMap[row][col] = new Room(Room.generateName());
+                    gameMap[row][col] = new Room(Room.removeRandom(roomList));
                 }
             }
         }
