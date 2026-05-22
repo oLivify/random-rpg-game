@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class Room {
 
-  public static Room removeRandom(ArrayList<Room> mylist){
+  public static Room pickRandom(ArrayList<Room> mylist){
     int index = Main.rng.nextInt(mylist.size());
     return mylist.remove(index);
   }

@@ -31,7 +31,7 @@ public class Map {
         setupQuadrant(WORLD_HEIGHT-2,WORLD_WIDTH-2, !oddQuadrantsHaveHealing); // Q4
         fillAllEmptyRooms(roomList);
         // finally, ensure that spawn point is a normal room
-        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.removeRandom(roomList));
+        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.pickRandom(roomList));
         displayMap(); // for debugging only
     }
 
@@ -62,7 +62,7 @@ public class Map {
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
                 if(gameMap[row][col] == null){
-                    gameMap[row][col] = new Room(Room.removeRandom(roomList));
+                    gameMap[row][col] = new Room(Room.pickRandom(roomList));
                 }
             }
         }
