@@ -10,7 +10,7 @@ Enemy extends Npc (6 tasks) Alex Can do these
   ✅ + void setAttackName()
 */
 
-import java.util.Random;
+
 
 
 public class Enemy extends Npc

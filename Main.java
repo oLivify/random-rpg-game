@@ -129,13 +129,17 @@ public class Main {
     Scanner input = new Scanner(System.in);
     Main.typewriter(5, "Please type a random seed number: ");
     Main.rng.setSeed(input.nextInt());
-    // create world now please
-    ArrayList<Room> basicRooms = loadRooms();
-    Map map = new Map(basicRooms);
-    Player player = new Player();
+    
 
     
-    ArrayList<Item> enemyDrops = loadWeapons(); //enemy drop list
+    ArrayList<Item> allWeapons = loadWeapons(); // all weapons
+    // enemy drops is now set up in Map class
+    
+
+    // create world now please
+    ArrayList<Room> basicRooms = loadRooms();
+    Map map = new Map(basicRooms, allWeapons);
+    Player player = new Player();
     
 
     // make a test enemy | ignore this i needed a visual representation

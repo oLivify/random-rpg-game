@@ -17,7 +17,7 @@ Room (9 tasks)
 */
 
 import java.util.ArrayList;
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class Room {

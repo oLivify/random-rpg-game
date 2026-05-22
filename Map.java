@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class Map {
     public static final int WORLD_HEIGHT = 5; // num rows
@@ -7,6 +7,8 @@ public class Map {
     
 
     private Room[][] gameMap;
+    private ArrayList<Room> roomList;
+    private ArrayList<Item> itemList;
     
 
     // 5 x 5 grid, 25 rooms
@@ -20,7 +22,12 @@ public class Map {
     
 
 
-    public Map(ArrayList<Room> roomList){
+    public Map(ArrayList<Room> roomList, ArrayList<Item> itemList){
+        ArrayList<Item> enemyDrops = new ArrayList<Item>();
+        // first 10 weapons (the 10 best) are dropped by enemies
+        for (int i = 0; i < 10; i++) {
+            enemyDrops.add(itemList.remove(0));
+        }
         
         gameMap = new Room[WORLD_HEIGHT][WORLD_WIDTH];
         setupRiver();
@@ -29,9 +36,9 @@ public class Map {
         setupQuadrant(0,0, !oddQuadrantsHaveHealing); // Q2
         setupQuadrant(WORLD_HEIGHT-2,0, oddQuadrantsHaveHealing); // Q3
         setupQuadrant(WORLD_HEIGHT-2,WORLD_WIDTH-2, !oddQuadrantsHaveHealing); // Q4
-        fillAllEmptyRooms(roomList);
+        fillAllEmptyRooms();
         // finally, ensure that spawn point is a normal room
-        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.pickRandom(roomList));
+        gameMap[WORLD_HEIGHT/2][WORLD_WIDTH/2] = new Room(Room.pickRandom(this.roomList));
         displayMap(); // for debugging only
     }
 
@@ -58,11 +65,11 @@ public class Map {
         return null;
     }
 
-    public void fillAllEmptyRooms(ArrayList<Room> roomList){
+    public void fillAllEmptyRooms(){
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
                 if(gameMap[row][col] == null){
-                    gameMap[row][col] = new Room(Room.pickRandom(roomList));
+                    gameMap[row][col] = new Room(Room.pickRandom(this.roomList));
                 }
             }
         }

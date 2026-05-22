@@ -22,7 +22,7 @@ Player (12 tasks) Joshua doing this one
   ✅ + toString() // returns all the player stats
 */
 
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class Player {
