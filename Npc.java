@@ -55,7 +55,7 @@ public class Npc
     speech = _speech;
   }
   public String toString(){
-    return "Name: " + name + ", Speech: " + speech + ", Description: " + description;
+    return name + " " + description;
   }
   // methods go down here
 
