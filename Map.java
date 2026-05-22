@@ -5,7 +5,7 @@ import java.util.Collections;
 public class Map {
     public static final int WORLD_HEIGHT = 5; // num rows
     public static final int WORLD_WIDTH = 5; // num cols
-    public static final int NUMBER_OF_ENEMIES = WORLD_HEIGHT * WORLD_WIDTH / 2;
+    public static final int NUM_BEST_ITEMS = WORLD_HEIGHT * WORLD_WIDTH / 2;
     
 
     private Room[][] gameMap;
@@ -30,9 +30,10 @@ public class Map {
         this.itemList = _itemList;
 
         this.enemyDrops = new ArrayList<Item>();
-        // first NUMBER_OF_ENEMIES weapons (the best) are dropped by enemies
+        // first BEST_ITEMS weapons are dropped by enemies
+        // ensures that you have to *earn* good items and only find less good items
 
-        for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
+        for (int i = 0; i < NUM_BEST_ITEMS; i++) {
             enemyDrops.add(itemList.remove(0));
         }
         Collections.shuffle(this.enemyDrops);
@@ -99,11 +100,24 @@ public class Map {
     }
 
     public Enemy makeGoblin(){
-        return new Enemy("Goblin","a weird green guy",enemyDrops.remove(0));
+        Item weapon = null;
+        if(enemyDrops.size() > 0){
+            weapon = enemyDrops.remove(0);
+        }else if(itemList.size() > 0){
+            weapon = itemList.remove(0);
+        }
+        return new Enemy("Goblin","a weird green guy",weapon);
     }
 
     public Enemy makeSlime(){
-        return new Enemy("Slime","creepy green goo",enemyDrops.remove(0));
+        Item weapon = null;
+        if(enemyDrops.size() > 0){
+            weapon = enemyDrops.remove(0);
+        }else if(itemList.size() > 0){
+            weapon = itemList.remove(0);
+        }
+
+        return new Enemy("Slime","creepy green goo",weapon);
     }
 
     public Npc makeNpcOrEnemy(){
@@ -115,7 +129,6 @@ public class Map {
             return makeGoblin();
         }
         return makeSlime();
-        
     }
 
     public void makeAmbushRoom(int startingRow, int rowOffset, int startingCol, int colOffset) {
@@ -133,7 +146,8 @@ public class Map {
     }
 
     public void makeTempleRoom(int startingRow, int rowOffset, int startingCol, int colOffset) { 
-        Room tempRoom = new TempleRoom("Temple " + (startingRow*10 + startingCol)); // this SHOULD be TempleRoom
+        Enemy dragon = new Enemy("Dragon", "an enormous terrible lizard", enemyDrops.remove(0));
+        Room tempRoom = new TempleRoom("Temple " + (startingRow*10 + startingCol), dragon); // this SHOULD be TempleRoom
         gameMap[startingRow + rowOffset][startingCol + colOffset] = tempRoom;
     }
 

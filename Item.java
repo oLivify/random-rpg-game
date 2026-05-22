@@ -91,7 +91,7 @@ public class Item
   }
 
   public String toString(){
-    return name + " "+ description;
+    return name.toUpperCase() + " "+ description;
   }
 
   public void weaken(){

@@ -51,7 +51,7 @@ public class Inventory {
     }
 
     public int findKey() {
-        System.out.println(storage);
+        //System.out.println(storage);
         for(int i=0; i<storage.size();i++){
             if(storage.get(i).isKey()) {
                 return i;

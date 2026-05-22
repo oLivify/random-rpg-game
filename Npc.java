@@ -55,7 +55,7 @@ public class Npc
     speech = _speech;
   }
   public String toString(){
-    return name + " " + description;
+    return name.toUpperCase() + " " + description;
   }
   // methods go down here
 

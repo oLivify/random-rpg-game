@@ -175,6 +175,10 @@ public class Player {
         previousLocation[1] = tempCol;
     }
 
+    public Item removeItem(int index){
+        return backpack.removeItem(index);
+    }
+
     public void setLocation(int row, int col) {
         //System.out.println("setLocation "+location[0]+" "+location[1]);
         if(row >= 0 && row < Map.WORLD_HEIGHT && col >= 0 && col < Map.WORLD_WIDTH){

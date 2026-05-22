@@ -46,4 +46,11 @@ basic rolling pin,a baker's defensive tool of choice,10
 basic broom,good for sweeping up trouble,10
 basic hammer,for gentle hammering,10
 pine branch,this is just a stick,10
+twig,this is just a stick,10
+stick,this is just a twig,10
+boulder,it's not just a boulder-it's a rock,10
+rock,crushes scissors,10
+paper,covers rock,10
+scissors,cut paper,10
 chef's ladle,good for fighting hunger,10
+butter knife,good for fighting hunger,10
