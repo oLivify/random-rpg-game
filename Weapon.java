@@ -7,7 +7,7 @@ public class Weapon extends Item {
     }
 
     public Weapon(Weapon other) {
-        super();
+        super(other);
         damage = other.damage;
     }
 
