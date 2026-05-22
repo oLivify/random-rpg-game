@@ -222,6 +222,7 @@ public class Map {
                 }
             }
             gameMap[row][col] = new RiverRoom(RiverRoom.generateName());
+            gameMap[row][col].setItem(itemList.remove(0));
             previousCol = col;
         }
     }

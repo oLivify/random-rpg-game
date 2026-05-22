@@ -75,56 +75,64 @@ public class Room {
 
   public void enterRoom(Player player) {
     Scanner input = new Scanner(System.in);
-    Npc roomNpc = getCharacter();
-    // describe the current room
-    Main.typewriter(5, getName() + "\n");
-    Main.typewriter(5, toString() + "\n");
-    // check if there is a character and/or item in current room
-    if (roomNpc != null) {
-      Main.typewriter(5, "There is " + roomNpc.toString() + " here.\n");
-    }
-    if (roomItem != null) {
-      Main.typewriter(5, "There is " + roomItem.toString() + " here.\n");
-    }
-    if (player.getBackpack().getSize() > 0) {
-      Main.typewriter(5, "You are holding " + player.getBackpack().getSize() + " items.\n");
-    }
-    // prompt
-    Main.typewriter(5,
-        "\nWHAT NEXT? " + getPossibleDirections(player)
-            + (getItem() == null ? "" : "[g]et, ")
-            + (getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit: ");
-    // get user input
-    String command = input.next();
-    command = command.toLowerCase();
-    if (command.equals("north") || command.equals("south") || command.equals("east") || command.equals("west")
-        || command.equals("n") || command.equals("s") || command.equals("e") || command.equals("w")) {
-      player.setLocation(command);
-    } else if (command.equals("g") || command.equals("get")) {
-      roomItem = player.takeItem(roomItem); // player either drops null or a different item
-    } else if (command.equals("t") || command.equals("talk")) {
+       
+    while(true){
+      Npc roomNpc = getCharacter();
+      // describe the current room
+      Main.typewriter(5, getName() + "\n");
+      Main.typewriter(5, toString() + "\n");
+      // check if there is a character and/or item in current room
       if (roomNpc != null) {
-        Main.typewriter(50, roomNpc.getName() + ": \"" + roomNpc.getSpeech() + "\"\n");
-      } else {
-        Main.typewriter(50, "There is nobody here to talk\n");
+        Main.typewriter(5, "There is " + roomNpc.toString() + " here.\n");
       }
-    } else if (command.equals("f") || command.equals("fight")) {
-      FightEvent fight = new FightEvent(player, roomNpc);
-      FightEvent.Outcome fightResult = fight.execute();
-      if (fightResult == FightEvent.Outcome.PLAYER_WIN) {
-        setCharacter(null);
+      if (roomItem != null) {
+        Main.typewriter(5, "There is " + roomItem.toString() + " here.\n");
       }
+      if (player.getBackpack().getSize() > 0) {
+        Main.typewriter(5, "You are holding " + player.getBackpack().getSize() + " items.\n");
+      }
+      // prompt
+      Main.typewriter(5,
+          "\nWHAT NEXT? " + getPossibleDirections(player)
+              + (getItem() == null ? "" : "[g]et, ")
+              + (getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit: ");
+      // get user input
+      String command = input.next();
+      command = command.toLowerCase();
+      if (command.equals("north") || command.equals("south") || command.equals("east") || command.equals("west")
+          || command.equals("n") || command.equals("s") || command.equals("e") || command.equals("w")) {
+        player.setLocation(command);
+        break;
+      } else if (command.equals("g") || command.equals("get")) {
+        roomItem = player.takeItem(roomItem); // player either drops null or a different item
+      } else if (command.equals("t") || command.equals("talk")) {
+        if (roomNpc != null) {
+          Main.typewriter(50, roomNpc.getName() + ": \"" + roomNpc.getSpeech() + "\"\n");
+        } else {
+          Main.typewriter(50, "There is nobody here to talk\n");
+        }
+      } else if (command.equals("f") || command.equals("fight")) {
+        FightEvent fight = new FightEvent(player, roomNpc);
+        FightEvent.Outcome fightResult = fight.execute();
+        if (fightResult == FightEvent.Outcome.PLAYER_WIN) {
+          setCharacter(null);
+        }else if (fightResult == FightEvent.Outcome.PLAYER_FLED) {
+          player.moveBackwards();
+          break;
+        }
 
-    } else if (command.equals("q") || command.equals("quit")) {
-      Main.typewriter(50, "Thanks for playing\n");
-      System.exit(0);
-    } else {
-      Main.typewriter(50, "I don't know how to " + command);
-      Main.typewriter(50,
-          ". Valid options include: " + this.getPossibleDirections(player)
-              + (this.getItem() == null ? "" : "[g]et, ")
-              + (this.getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit.\n");
+      } else if (command.equals("q") || command.equals("quit")) {
+        Main.typewriter(50, "Thanks for playing\n");
+        System.exit(0);
+      } else {
+        Main.typewriter(50, "I don't know how to " + command);
+        Main.typewriter(50,
+            ". Valid options include: " + this.getPossibleDirections(player)
+                + (this.getItem() == null ? "" : "[g]et, ")
+                + (this.getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit.\n");
+      }
     }
+    
   }
 
   public String getPossibleDirections(Player player) {
