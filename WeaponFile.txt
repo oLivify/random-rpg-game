@@ -11,7 +11,7 @@ wood axe,a lightweight tool for chopping kindling,50
 blacksmith hammer,forged to shape hot iron,50
 rusty sword,dull and flaking with orange decay,45
 rusty scythe,a forgotten reaping tool with a heavily oxidized blade,45
-rusty iron ax,a battered woodcutter's tool with a brittle, corroded head,45
+rusty iron ax,a battered woodcutter's tool with a brittle corroded head,45
 meat cleaver,a heavy blade from the butcher's block,40
 sickle,a short-handled blade for reaping grain,40
 butcher knife,sharp enough to slice through bone,40
@@ -41,3 +41,9 @@ wooden broom,good for sweeping up trouble,10
 rubber hammer,for gentle hammering,10
 tree branch,this is just a stick,10
 soup ladle,good for fighting hunger,10
+basic mop,for battling spills,10
+basic rolling pin,a baker's defensive tool of choice,10
+basic broom,good for sweeping up trouble,10
+basic hammer,for gentle hammering,10
+pine branch,this is just a stick,10
+chef's ladle,good for fighting hunger,10

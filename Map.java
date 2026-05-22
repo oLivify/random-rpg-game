@@ -1,14 +1,17 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Map {
     public static final int WORLD_HEIGHT = 5; // num rows
     public static final int WORLD_WIDTH = 5; // num cols
+    public static final int NUMBER_OF_ENEMIES = WORLD_HEIGHT * WORLD_WIDTH / 2;
     
 
     private Room[][] gameMap;
     private ArrayList<Room> roomList;
     private ArrayList<Item> itemList;
+    private ArrayList<Item> enemyDrops;
     
 
     // 5 x 5 grid, 25 rooms
@@ -22,12 +25,18 @@ public class Map {
     
 
 
-    public Map(ArrayList<Room> roomList, ArrayList<Item> itemList){
-        ArrayList<Item> enemyDrops = new ArrayList<Item>();
-        // first 10 weapons (the 10 best) are dropped by enemies
-        for (int i = 0; i < 10; i++) {
+    public Map(ArrayList<Room> _roomList, ArrayList<Item> _itemList){
+        this.roomList = _roomList;
+        this.itemList = _itemList;
+
+        this.enemyDrops = new ArrayList<Item>();
+        // first NUMBER_OF_ENEMIES weapons (the best) are dropped by enemies
+
+        for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
             enemyDrops.add(itemList.remove(0));
         }
+        Collections.shuffle(this.enemyDrops);
+        Collections.shuffle(this.itemList);
         
         gameMap = new Room[WORLD_HEIGHT][WORLD_WIDTH];
         setupRiver();
@@ -70,6 +79,8 @@ public class Map {
             for(int col = 0; col < WORLD_WIDTH; col++){
                 if(gameMap[row][col] == null){
                     gameMap[row][col] = new Room(Room.pickRandom(this.roomList));
+                    gameMap[row][col].setItem(itemList.remove(0));
+                    gameMap[row][col].setCharacter(makeNpcOrEnemy());
                 }
             }
         }
@@ -79,15 +90,41 @@ public class Map {
         Room healingRoom = new HealingRoom("Healing");
         gameMap[startingRow + rowOffset][startingCol + colOffset] = healingRoom;
         // just a test item for keys
-        Item key1 = new Item("Golden Key", "Used to unlock fancy doors", true);
+        Item key1 = new Item("Golden Key", "used to unlock fancy doors", true);
         healingRoom.setItem(key1);
     }
 
+    public Enemy makeGoblin(){
+        return new Enemy("Goblin","a weird green guy",enemyDrops.remove(0));
+    }
+
+    public Enemy makeSlime(){
+        return new Enemy("Slime","creepy green goo",enemyDrops.remove(0));
+    }
+
+    public Npc makeNpcOrEnemy(){
+        int randomNum = Main.rng.nextInt(3);
+        if(randomNum == 0){
+            return new Npc("Beth","a peasant girl");
+        }
+        if(randomNum == 1){
+            return makeGoblin();
+        }
+        return makeSlime();
+        
+    }
+
     public void makeAmbushRoom(int startingRow, int rowOffset, int startingCol, int colOffset) {
-        Room keyRoom = new AmbushRoom("Ambush");
-        Enemy keyHoldingEnemy = new Enemy();
-        keyRoom.setCharacter(keyHoldingEnemy);
-        gameMap[startingRow + rowOffset][startingCol + colOffset] = keyRoom;
+        Room aRoom = new AmbushRoom("Ambush");
+        Enemy myEnemy;
+        if(Main.rng.nextInt(2) == 1){
+            myEnemy = makeGoblin();
+        } else {
+            myEnemy = makeSlime();
+        }
+        aRoom.setCharacter(myEnemy);
+        gameMap[startingRow + rowOffset][startingCol + colOffset] = aRoom;
+        gameMap[startingRow + rowOffset][startingCol + colOffset].setItem(new Item("Golden Key", "used to unlock fancy doors", true));
     }
 
     public void makeTempleRoom(int startingRow, int rowOffset, int startingCol, int colOffset) { 
@@ -140,6 +177,7 @@ public class Map {
         // row 0 is the only truly random location
         int col = Main.rng.nextInt(RIVER_MAX_COLUMN) + RIVER_MIN_COLUMN;
         gameMap[0][col] = new RiverRoom(RiverRoom.generateName());
+        gameMap[0][col].setItem(itemList.remove(0));
         previousCol = col;
         // the rest of the rows are dependant on the previous row
         for(int row = 1; row < WORLD_HEIGHT; row++){
