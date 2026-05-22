@@ -38,7 +38,7 @@ public class Enemy extends Npc
   public Enemy(){
     super();
     health = 100;
-    magicWeakness = 1;
+    magicWeakness = Main.rng.nextInt(3);
     attackName = "slap";
     enemyCounter++;
   }
@@ -46,7 +46,7 @@ public class Enemy extends Npc
   public Enemy(Item _reward){
     super();
     health = 100;
-    magicWeakness = 1;
+    magicWeakness = Main.rng.nextInt(3);
     attackName = "slap";
     enemyCounter++;
     reward = _reward;
@@ -55,7 +55,7 @@ public class Enemy extends Npc
   public Enemy(String enemyName, String enemyDescription){
     super(enemyName,enemyDescription);
     health = 100;
-    magicWeakness = 1;
+    magicWeakness = Main.rng.nextInt(3);
     attackName = "slap";
     enemyCounter++;
   }
@@ -63,7 +63,7 @@ public class Enemy extends Npc
   public Enemy(String enemyName, String enemyDescription, Item _reward){
     super(enemyName,enemyDescription);
     health = 100;
-    magicWeakness = 1;
+    magicWeakness = Main.rng.nextInt(3);
     attackName = "slap";
     reward = _reward;
     enemyCounter++;

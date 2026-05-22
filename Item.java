@@ -26,11 +26,11 @@ public class Item
   
   public Item()
   {
-    // set magicType to a random number 1-3 (inclusive)
+    // set magicType to a random number 0-2 (inclusive)
     name = "item name";
     strength = 50;
     description = "item description";
-    magicType = Main.rng.nextInt(3)+1;
+    magicType = Main.rng.nextInt(3);
     isKey = false;
   }
 
@@ -41,7 +41,7 @@ public class Item
     strength = 50;
     description = _description;
     // set magicType to 1
-    magicType = 1;
+    magicType = Main.rng.nextInt(3);
     isKey = false;
   }
 
@@ -60,7 +60,7 @@ public class Item
       strength = 50;
       description = _description;
       // set magicType to 1
-      magicType = 1;
+      magicType = Main.rng.nextInt(3);
       isKey = _isKey;
     }
 

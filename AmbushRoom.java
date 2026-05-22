@@ -12,6 +12,11 @@ public class AmbushRoom extends Room {
         super(name_);
     }
 
+    public AmbushRoom(Room _normal) {
+        super(_normal);
+        super.setName("Ambush " + getName());
+    }
+
     public void enterRoom(Player player) {
         Scanner input = new Scanner(System.in);
         Main.typewriter(5, "You get ambushed by an enemy!");

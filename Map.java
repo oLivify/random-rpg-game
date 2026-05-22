@@ -55,11 +55,15 @@ public class Map {
         for(int row = 0; row < WORLD_HEIGHT; row++){
             for(int col = 0; col < WORLD_WIDTH; col++){
                 String roomName = gameMap[row][col].getName();
-                String spaceString = "                      |  ";
+                String spaceString = "                       | ";
                 if(roomName.length() < spaceString.length()){
                     spaceString = spaceString.substring(roomName.length());
+                    System.out.print( roomName + spaceString);
+                } else {
+                    // name too long
+                    System.out.print( roomName.substring(0,spaceString.length()-2) + "| ");
                 }
-                System.out.print( roomName + spaceString);
+                
             }
             System.out.println();
         }
@@ -115,7 +119,8 @@ public class Map {
     }
 
     public void makeAmbushRoom(int startingRow, int rowOffset, int startingCol, int colOffset) {
-        Room aRoom = new AmbushRoom("Ambush");
+        Room normalRoom = Room.pickRandom(this.roomList);
+        Room aRoom = new AmbushRoom(normalRoom);
         Enemy myEnemy;
         if(Main.rng.nextInt(2) == 1){
             myEnemy = makeGoblin();
