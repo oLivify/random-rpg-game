@@ -187,16 +187,16 @@ public class Player {
     }
 
     public void setLocation(String direction) {
-        if(direction.equalsIgnoreCase("north")){
+        if(direction.equalsIgnoreCase("n") || direction.equalsIgnoreCase("north")){
             setLocation(location[0] - 1, location[1]);
         }
-        else if(direction.equalsIgnoreCase("south")){
+        else if(direction.equalsIgnoreCase("s") || direction.equalsIgnoreCase("south")){
             setLocation(location[0] + 1, location[1]);
         }
-        else if(direction.equalsIgnoreCase("east")){
+        else if(direction.equalsIgnoreCase("e") || direction.equalsIgnoreCase("east")){
             setLocation(location[0], location[1] + 1);
         }
-        else if(direction.equalsIgnoreCase("west")){
+        else if(direction.equalsIgnoreCase("w") || direction.equalsIgnoreCase("west")){
             setLocation(location[0], location[1] - 1);
         }
     }

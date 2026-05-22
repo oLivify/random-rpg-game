@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class Room {
 
-  public static Room pickRandom(ArrayList<Room> mylist){
+  public static Room pickRandom(ArrayList<Room> mylist) {
     int index = Main.rng.nextInt(mylist.size());
     return mylist.remove(index);
   }
@@ -92,37 +92,38 @@ public class Room {
     // prompt
     Main.typewriter(5,
         "\nWHAT NEXT? " + getPossibleDirections(player)
-            + (getItem() == null ? "" : "take, ")
-            + (getCharacter() == null ? "" : "talk, fight, ") + "or quit: ");
+            + (getItem() == null ? "" : "[g]et, ")
+            + (getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit: ");
     // get user input
     String command = input.next();
     command = command.toLowerCase();
-    if (command.equals("north") || command.equals("south") || command.equals("east") || command.equals("west")) {
+    if (command.equals("north") || command.equals("south") || command.equals("east") || command.equals("west")
+        || command.equals("n") || command.equals("s") || command.equals("e") || command.equals("w")) {
       player.setLocation(command);
-    } else if (command.equals("take")) {
+    } else if (command.equals("g") || command.equals("get")) {
       roomItem = player.takeItem(roomItem); // player either drops null or a different item
-    } else if (command.equals("talk")) {
+    } else if (command.equals("t") || command.equals("talk")) {
       if (roomNpc != null) {
         Main.typewriter(50, roomNpc.getName() + ": \"" + roomNpc.getSpeech() + "\"\n");
       } else {
         Main.typewriter(50, "There is nobody here to talk\n");
       }
-    } else if (command.equals("fight")) {
+    } else if (command.equals("f") || command.equals("fight")) {
       FightEvent fight = new FightEvent(player, roomNpc);
       FightEvent.Outcome fightResult = fight.execute();
-      if(fightResult == FightEvent.Outcome.PLAYER_WIN) {
+      if (fightResult == FightEvent.Outcome.PLAYER_WIN) {
         setCharacter(null);
       }
 
-    } else if (command.equals("quit")) {
+    } else if (command.equals("q") || command.equals("quit")) {
       Main.typewriter(50, "Thanks for playing\n");
       System.exit(0);
     } else {
       Main.typewriter(50, "I don't know how to " + command);
       Main.typewriter(50,
           ". Valid options include: " + this.getPossibleDirections(player)
-              + (this.getItem() == null ? "" : "take, ")
-              + (this.getCharacter() == null ? "" : "talk, fight, ") + "or quit.\n");
+              + (this.getItem() == null ? "" : "[g]et, ")
+              + (this.getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit.\n");
     }
   }
 
@@ -132,16 +133,16 @@ public class Room {
     int col = myLocation[1];
     String possibleDirections = "Type either: ";
     if (row > 0) {
-      possibleDirections += "north, ";
+      possibleDirections += "[n]orth, ";
     }
     if (row < Map.WORLD_HEIGHT - 1) {
-      possibleDirections += "south, ";
+      possibleDirections += "[s]outh, ";
     }
     if (col < Map.WORLD_WIDTH - 1) {
-      possibleDirections += "east, ";
+      possibleDirections += "[e]ast, ";
     }
     if (col > 0) {
-      possibleDirections += "west, ";
+      possibleDirections += "[w]est, ";
     }
 
     return possibleDirections;

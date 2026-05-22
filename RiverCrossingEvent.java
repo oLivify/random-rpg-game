@@ -39,10 +39,10 @@ public class RiverCrossingEvent {
 
         // --- Player's Turn ---
         while (playing) {
-            System.out.print("Do you want to [row] or [stop]: ");
+            System.out.print("Do you want to [r]ow or [h]old: ");
             String choice = input.nextLine().trim().toLowerCase();
 
-            if (choice.equals("row")) {
+            if (choice.equals("r") || choice.equals("row")) {
                 int playerRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
                 playerYards += playerRoll;
                 Main.typewriter(5,
@@ -50,7 +50,7 @@ public class RiverCrossingEvent {
 
                 if (playerYards == 21) {
                     Main.typewriter(5, "You reached exactly 21 yards!\n");
-                    Main.typewriter(5, "Success!\n");
+                    Main.typewriter(5, "SUCCESS!!!\n");
                     return RiverCrossingEvent.Outcome.SUCCESS;
                 } else if (playerYards > 21) {
                     Main.typewriter(5, "Bust! You over-rowed and lost control at " + playerYards + " yards.\n");
@@ -66,13 +66,13 @@ public class RiverCrossingEvent {
                 } else {
                     // current's turn if currentYards < 17
                     if(currentYards < 17){
-                        int currentRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
+                        int currentRoll = Main.rng.nextInt(6) + 1 + Main.rng.nextInt(6) + 1; // roll 2 dice yards
                         currentYards += currentRoll;
                         Main.typewriter(5, "The river current surges forward " + currentRoll + " yards. River Total: "
                                 + currentYards + " yards.\n");
                         if(currentYards > 21){
                             Main.typewriter(5, "The currents turns and helps push you to the opposite shore.\n");
-                            Main.typewriter(5, "Success!\n");
+                            Main.typewriter(5, "SUCCESS!!!\n");
                             return RiverCrossingEvent.Outcome.SUCCESS;
                         }
                     } else {
@@ -85,24 +85,24 @@ public class RiverCrossingEvent {
                         Main.typewriter(5, "The current is overpowering you!\n");
                     }
                 }
-            } else if (choice.equals("stop")) {
+            } else if (choice.equals("h") || choice.equals("hold")) {
                 playing = false;
             } else {
-                Main.typewriter(5, "Invalid choice. Please type [row] or [stop]: ");
+                Main.typewriter(5, "Invalid choice. Please type [r]ow or [h]old: ");
             }
         }
 
         // If player stopped, the river takes multiple turns (unless player
         // already hit 21)
         if (playerYards == 21) {
-            Main.typewriter(5, "Success! You have safely crossed the river.\n");
+            Main.typewriter(5, "SUCCESS!!!\nYou have safely crossed the river.\n");
             return RiverCrossingEvent.Outcome.SUCCESS;
         }
 
         // --- River's Turn ---
         Main.typewriter(5, "You stop rowing. The river current pushes back...\n");
         while (currentYards <= playerYards && currentYards < 21) {
-            int currentRoll = Main.rng.nextInt(6) + 1; // 1-6 yards
+            int currentRoll = Main.rng.nextInt(6) + 1 + Main.rng.nextInt(6) + 1; // roll 2 dice yards
             currentYards += currentRoll;
             Main.typewriter(5, "The river current surges forward " + currentRoll + " yards. River Total: "
                     + currentYards + " yards.\n");
@@ -112,7 +112,7 @@ public class RiverCrossingEvent {
         if (currentYards > 21) {
             Main.typewriter(5,
                     "The river current pushes you " + currentYards + " yards! You managed to hold your ground.\n");
-            Main.typewriter(5, "Success! You safely navigate through the " + room.getName() + ".\n");
+            Main.typewriter(5, "SUCCESS!!!\nYou safely navigate through the " + room.getName() + ".\n");
             return RiverCrossingEvent.Outcome.SUCCESS;
         } else {
             Main.typewriter(5, "The river current reached " + currentYards + " yards, overpowering your " + playerYards

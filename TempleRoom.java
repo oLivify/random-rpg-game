@@ -25,9 +25,9 @@ public class TempleRoom extends Room{
             if (player.getBackpack().findKey() != -1) {
                 //ask player if they want to unlock the temple
                 //maybe get a reward from it?
-                Main.typewriter(5, "Do you want to unlock the temple? Type [yes] or [no]: ");
+                Main.typewriter(5, "Do you want to unlock the temple? Type [y]es or [n]o: ");
                 String command = input.nextLine();
-                if(command.equals("yes")) {
+                if(command.equals("y") || command.equals("yes")) {
                     //unlock the temple not sure how
                     player.fullHeal();
                     Main.typewriter(5, "The temple heals you to full health!");
