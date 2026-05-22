@@ -110,6 +110,9 @@ public class Room {
     } else if (command.equals("fight")) {
       FightEvent fight = new FightEvent(player, roomNpc);
       FightEvent.Outcome fightResult = fight.execute();
+      if(fightResult == FightEvent.Outcome.PLAYER_WIN) {
+        setCharacter(null);
+      }
 
     } else if (command.equals("quit")) {
       Main.typewriter(50, "Thanks for playing\n");
