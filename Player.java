@@ -68,12 +68,12 @@ public class Player {
             }
         } else if (command.equals("u") && backpack != null) { // use item
             // which item?
-            Main.typewriter(5, "Which item? Type either:\n");
+            Main.typewriter(5, "Which item? Type either:");
             backpack.displayItems();
             Weapon weapon = (Weapon)(backpack.getItem(input.nextInt())); // changed class from Item to Weapon, cast to Weapon
             while (weapon.isKey() == true) { //added check to see if you are fighting with a key or not
                 Main.typewriter(5, "You cannot fight with keys. Choose a different item");
-                Main.typewriter(5, "Which item? Type either:\n");
+                Main.typewriter(5, "Which item? Type either:");
                 backpack.displayItems();
                 weapon = (Weapon)(backpack.getItem(input.nextInt()));
             }
