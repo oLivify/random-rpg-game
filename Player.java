@@ -68,16 +68,26 @@ public class Player {
             }
         } else if (command.equals("u") && backpack != null) { // use item
             // which item?
-            Main.typewriter(5, "Which item? Type either:");
             backpack.displayItems();
-            Weapon weapon = (Weapon)(backpack.getItem(input.nextInt())); // changed class from Item to Weapon, cast to Weapon
-            while (weapon.isKey() == true) { //added check to see if you are fighting with a key or not
-                Main.typewriter(5, "You cannot fight with keys. Choose a different item");
-                Main.typewriter(5, "Which item? Type either:");
-                backpack.displayItems();
-                weapon = (Weapon)(backpack.getItem(input.nextInt()));
-            }
+            Main.typewriter(5, "\nWhich item? Type either: ");
             
+
+            Item chooseItem = backpack.getItem(input.nextInt());
+
+            while (chooseItem == null || !(chooseItem instanceof Weapon)) {
+                Main.typewriter(5, "You cannot fight with that item. Choose a different item\n");
+                
+                if(backpack.getSize() == 1) {
+                    Main.typewriter(5, "You have no valid weapons to use!\n");
+                    return 0; 
+                }
+                
+                Main.typewriter(5, "Which item? Type either:\n");
+                backpack.displayItems();
+                chooseItem = backpack.getItem(input.nextInt()); 
+            }
+            Weapon weapon = (Weapon)(chooseItem); // changed class from Item to Weapon, cast to Weapon
+
             Main.typewriter(5, "You used " + weapon.getName().toUpperCase() + "\n");
             attack = weapon.getDamage(); // changed to getDamage from getStrength;
             if (weapon.getMagicType() == e.getMagicWeakness()) {
@@ -92,9 +102,9 @@ public class Player {
                 // this.setBackpack(null);
             }
         } else if (!command.equals("r")) {
-            Main.typewriter(50, "Sorry, I don't know how to " + command);
-            Main.typewriter(50,
-                    ". Valid options: p, k, r" + (backpack == null ? "" : ", x = use an item\n"));
+            Main.typewriter(25, "Sorry, I don't know how to " + command);
+            Main.typewriter(25,
+                    ". Valid options: p, k, r" + (backpack == null ? "" : ", u = use an item\n"));
             return 0;
         }
         Main.typewriter(5, e.getName() + " -" + attack + " HP\n");
@@ -199,23 +209,24 @@ public class Player {
         Item result = null;
         if (backpack.getSize() > 0) {
             Scanner input = new Scanner(System.in);
-            Main.typewriter(5, "Would you like to drop something? Type either: ");
             backpack.displayItems();
-            Main.typewriter(5, "-1 = Keep everything");
+            Main.typewriter(5, "\n   -1 = Keep everything ");
+            Main.typewriter(5, "\nWould you like to drop something? Type either: ");
+            
             int userNumber = input.nextInt();
             if (userNumber >= 0 && userNumber < backpack.getSize()) {
                 Item dropped = backpack.removeItem(userNumber);
                 Main.typewriter(50, "You drop " + dropped + " and pick up " + newItem + ".\n");
                 result = dropped;
             } else {
-                Main.typewriter(50, "You pick up " + newItem + ".\n");
+                Main.typewriter(25, "You pick up " + newItem + ".\n");
             }
             backpack.addItem(newItem);
 
         } else {
             // not holding anything right now
             backpack.addItem(newItem);
-            Main.typewriter(50, "You pick up " + newItem + ".\n");
+            Main.typewriter(25, "You pick up " + newItem + ".\n");
         }
         return result;
     }

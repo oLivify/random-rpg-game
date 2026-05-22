@@ -24,9 +24,17 @@ public class Inventory {
         return copy;
     }
 
+
+
     public void displayItems(){
         for(int i=0; i<storage.size();i++){
-            Main.typewriter(5, "\n   " + i + " = " + storage.get(i));
+            Main.typewriter(5, "   " + i + " = " + storage.get(i)); //removed line break...
+        }
+    }
+
+    public void displayName() {
+        for(int i=0; i<storage.size();i++){
+            Main.typewriter(5, "   " + i + " = " + storage.get(i).getName());
         }
     }
 
