@@ -125,8 +125,8 @@ public class Room {
         Main.typewriter(50, "Thanks for playing\n");
         System.exit(0);
       } else {
-        Main.typewriter(50, "I don't know how to " + command);
-        Main.typewriter(50,
+        Main.typewriter(15, "I don't know how to " + command);
+        Main.typewriter(15,
             ". Valid options include: " + this.getPossibleDirections(player)
                 + (this.getItem() == null ? "" : "[g]et, ")
                 + (this.getCharacter() == null ? "" : "[t]alk, [f]ight, ") + "or [q]uit.\n");

@@ -102,8 +102,8 @@ public class Player {
                 // this.setBackpack(null);
             }
         } else if (!command.equals("r")) {
-            Main.typewriter(25, "Sorry, I don't know how to " + command);
-            Main.typewriter(25,
+            Main.typewriter(15, "Sorry, I don't know how to " + command);
+            Main.typewriter(15,
                     ". Valid options: p, k, r" + (backpack == null ? "" : ", u = use an item\n"));
             return 0;
         }
